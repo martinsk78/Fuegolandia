@@ -7,7 +7,10 @@ function MayoristaMenu({ setMenu, setHistory }) {
   const [list, setList] = useState([]);
   const [matches, setMatches] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(-1); // Índice seleccionado con teclado
-
+  const [newCohete, setNewCohete] = useState(false);
+  const [newCoheteName, setNewCoheteName] = useState("");
+  const [newCohetePrice, setNewCohetePrice] = useState();
+  const [newCoheteQuantity, setNewCoheteQuantity] = useState();
   const handleForm = (e) => {
     e.preventDefault();
     const selectedCohete = cohetes.find(
@@ -101,9 +104,19 @@ function MayoristaMenu({ setMenu, setHistory }) {
       setList([]);
     }
   };
+  const handleNewCohete = (e) => {
+    e.preventDefault();
+    if(newCoheteName && newCohetePrice && newCoheteQuantity){
 
+      setList([...list, {name:newCoheteName, price:parseInt(newCohetePrice), cantidad:parseInt(newCoheteQuantity), precioTotal:parseInt(newCohetePrice)*parseInt(newCoheteQuantity)}])
+      setNewCoheteName('')
+      setNewCoheteQuantity(0);
+      setNewCohetePrice(0);
+      setNewCohete(false);
+    }
+  };
   return (
-    <div className="flex items-center justify-center w-[100vw] h-full sm:h-[100vh] text-white">
+    <div className="flex items-center justify-center relative w-[100vw] h-full sm:h-[100vh] text-white">
       <div className="bg-black flex sm:p-10 w-[90%] h-[90%] bg-opacity-80">
         <div className="w-full h-full sm:flex-row flex-col flex gap-10">
           <div className="sm:w-1/2 flex flex-col ">
@@ -174,8 +187,7 @@ function MayoristaMenu({ setMenu, setHistory }) {
                 Cantidad
               </label>
               <input
-                                autoComplete="off"
-
+                autoComplete="off"
                 type="text"
                 name="cantidad"
                 onChange={(e) => setCantidad(e.target.value)}
@@ -183,12 +195,17 @@ function MayoristaMenu({ setMenu, setHistory }) {
                 value={cantidad}
                 className="text-black text-xl p-2 border h-10 border-black w-1/2"
               />
+              <div className="relative w-full items-center justify-center flex flex-col sm:flex-row">
               <button
-                type="submit"
-                className="text-xl bg-blue-600 hover:bg-blue-700 m-2 px-5 py-3 rounded text-white"
-              >
-                Ingresar
-              </button>
+                  type="submit"
+                  className="text-xl bg-blue-600 hover:bg-blue-700 m-2 px-5 py-3 rounded text-white"
+                >
+                  Ingresar
+                </button>
+                <button className="text-xl left-0 sm:absolute bg-red-600 hover:bg-red-700 m-2 px-5 py-3 rounded text-white" onClick={()=>{setNewCohete(true)}}>
+                  Ingresar cohete fuera de la lista
+                </button>
+              </div>
               <button
                 onClick={handleVenta}
                 className="text-3xl bg-green-600 hover:bg-green-700 m-2 px-5 py-3 rounded text-white"
@@ -250,6 +267,56 @@ function MayoristaMenu({ setMenu, setHistory }) {
           </div>
         </div>
       </div>
+      {newCohete ? (
+        <div className="absolute z-30 h-[100vh] flex items-center justify-center w-[100vw] bg-slate-800 bg-opacity-80 ">
+          <div className="relative h-[70vh] w-[50vw] bg-slate-900 ">
+            <form onSubmit={handleNewCohete} className="flex flex-col justify-center items-center h-full w-full gap-5 text-3xl">
+            <label htmlFor="nuevoCoheteNombre" className="m-3">
+                Nombre del cohete
+              </label>
+              <input
+                autoComplete="off"
+                type="text"
+                name="nuevoCoheteNombre"
+                onChange={(e) => setNewCoheteName(e.target.value)}
+                id="nuevoCoheteNombre"
+                value={newCoheteName}
+                className="text-black text-xl p-2 border shadow-md shadow-white h-10 border-black w-1/2"
+              />
+              <label htmlFor="nuevoCohetePrecio" className="m-3">
+                Precio
+              </label>
+              <input
+                autoComplete="off"
+                type="text"
+                name="nuevoCohetePrecio"
+                onChange={(e) => setNewCohetePrice(e.target.value)}
+                id="nuevoCohetePrecio"
+                value={newCohetePrice}
+                className="text-black text-xl p-2 shadow-md shadow-white border h-10 border-black w-1/2"
+              />
+              <label htmlFor="nuevoCoheteCantidad" className="m-3">
+                Cantidad
+              </label>
+              <input
+                autoComplete="off"
+                type="text"
+                name="nuevoCoheteCantidad"
+                onChange={(e) => setNewCoheteQuantity(e.target.value)}
+                id="nuevoCoheteCantidad"
+                value={newCoheteQuantity}
+                className="text-black text-xl p-2 border shadow-md shadow-white  h-10 border-black w-1/2"
+              />
+              <button className="border rounded p-3" action='submit'>Ingresar</button>
+            </form>
+            <icon className='text-white absolute top-2 text-4xl right-5 cursor-pointer' onClick={()=>{
+              setNewCohete(false)
+            }}>X</icon>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
