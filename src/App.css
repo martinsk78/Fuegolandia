@@ -2,8 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
-    background-image: url('./imgs/fuegolandiaLogo.jpg');
-    background-repeat:'no-repeat';
-    background-position: center;
+html {
+  background-image: url('./imgs/fuegolandiaLogo.jpg');
+  background-position: center;
+  background-repeat: repeat;
+  background-size:auto;
+  font-size: 16px; /* Base font-size para 
+  pantallas grandes */
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 15px; /* Ajuste para tablets o pantallas medianas */
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px; /* Ajuste para móviles en orientación vertical */
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px; /* Ajuste para pantallas muy pequeñas */
+  }
 }

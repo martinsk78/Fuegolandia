@@ -17,11 +17,15 @@
     },
     {
       "name": "Batería",
-      "price": 5000
+      "price": 7500
     },
     {
-      "name": "Candela x 5 luces (12 unidades)",
-      "price": 4400
+      "name": "Mariposa",
+      "price": 4000
+    },
+    {
+      "name": "Candela x 5 luces",
+      "price": 4700
     },
     {
       "name": "Candela x10 luces",
@@ -29,7 +33,7 @@
     },
     {
       "name": "Candela x20 luces",
-      "price": 3860
+      "price": 3900
     },
     {
       "name": "Candela x30 luces",
@@ -60,8 +64,13 @@
       "price": 4153
     },
     {
-      "name": "Matabrujas",
+      "name": "Matabrujas Pack X10",
       "price": 45000
+    },
+    
+    {
+      "name": "Matabrujas X5",
+      "price": 4500
     },
     {
       "name": "Show de Perlas x48",
