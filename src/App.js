@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import "./app.css";
+import "./App.css";
 import MayoristaMenu from "./components/MayoristaMenu";
 import MinoristaMenu from "./components/MinoristaMenu";
 import FirstPage from "./components/FirstPage";
