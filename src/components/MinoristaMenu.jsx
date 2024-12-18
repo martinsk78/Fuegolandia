@@ -2,24 +2,27 @@ import { React, useEffect, useState, useRef } from "react";
 import cohetes from "../preciosMinorista.json";
 
 function MinoristaMenu({ setMenu, setHistory }) {
-  const [search, setSearch] = useState("");
-  const [cantidad, setCantidad] = useState('');
-  const [list, setList] = useState([]);
-  const [matches, setMatches] = useState([]);
-  const [selectedIndex, setSelectedIndex] = useState(-1); // Índice seleccionado con teclado
-  const [newCohete, setNewCohete] = useState(false);
-  const [newCoheteName, setNewCoheteName] = useState("");
-  const [newCohetePrice, setNewCohetePrice] = useState();
-  const [newCoheteQuantity, setNewCoheteQuantity] = useState();
-
-  const inputCoheteRef = useRef(null)
-  const inputCantidadRef = useRef(null)
-  const inputNewCoheteNameRef = useRef(null)
-  const inputNewCohetePriceRef = useRef(null)
-  const inputNewCoheteQuantityRef = useRef(null)
-
-  const formRef = useRef(null)
-
+    const [search, setSearch] = useState("");
+     const [cantidad, setCantidad] = useState(null);
+     const [list, setList] = useState([]);
+     const [matches, setMatches] = useState([]);
+     const [selectedIndex, setSelectedIndex] = useState(-1); // Índice seleccionado con teclado
+ 
+     const [newCohete, setNewCohete] = useState(false);
+     const [newCoheteName, setNewCoheteName] = useState("");
+     const [newCohetePrice, setNewCohetePrice] = useState();
+     const [newCoheteQuantity, setNewCoheteQuantity] = useState();
+ 
+     const inputCoheteRef = useRef(null)
+     const inputCantidadRef = useRef(null)
+     const inputNewCoheteNameRef = useRef(null)
+     const inputNewCohetePriceRef = useRef(null)
+     const inputNewCoheteQuantityRef = useRef(null)
+ 
+     const formRef = useRef(null)
+ 
+     const [deletedCohete, setDeletedCohete] = useState(false);
+ 
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Enter" && formRef.current) {
@@ -30,8 +33,10 @@ function MinoristaMenu({ setMenu, setHistory }) {
   }, []);
 
   useEffect(()=>{
-    if(inputCoheteRef.current){
+    if(inputCoheteRef.current && deletedCohete !== true){
 inputCoheteRef.current.focus();
+    }else{
+      setDeletedCohete(false)
     }
   },[list])
 
@@ -117,6 +122,7 @@ inputCoheteRef.current.focus();
   };
 
   const handleMatchClick = (name) => {
+    inputCantidadRef.current.focus()
     setSearch(name);
     setMatches([]);
     setSelectedIndex(-1);
@@ -124,6 +130,7 @@ inputCoheteRef.current.focus();
 
   // Función para remover un cohete de la lista
   const handleRemove = (name) => {
+    setDeletedCohete(true);
     setList((prevList) => prevList.filter((cohete) => cohete.name !== name));
   };
 
@@ -151,7 +158,7 @@ inputCoheteRef.current.focus();
   };
   return (
     <div className="flex items-center justify-center relative w-[100vw] h-full sm:h-[100vh] text-white">
-      <div className="bg-black flex sm:p-10 w-[90%] h-[90%] bg-opacity-80">
+      <div className="bg-black flex sm:p-10 w-full h-full sm:w-[90%] sm:h-[90%] bg-opacity-80">
         <div className="w-full h-full sm:flex-row flex-col flex gap-10">
           <div className="sm:w-1/2 flex flex-col ">
             <h1 className="text-4xl m-5">FUEGOLANDIA</h1>
@@ -161,13 +168,13 @@ inputCoheteRef.current.focus();
               <div className="flex">
                 <button
                   onClick={() => setMenu("historial")}
-                  className="text-xl     m-2 bg-red-600 hover:bg-red-700 px-1 sm:px-5 py-3 rounded text-white"
+                  className="text-xl     m-2 bg-red-800 hover:bg-red-700 px-1 sm:px-5 py-3 rounded text-white"
                 >
                   Historial
                 </button>
                 <button
                   onClick={() => setMenu("")}
-                  className="text-xl bg-blue-600     hover:bg-blue-700 m-2 px-1 sm:px-5 py-3 rounded text-white"
+                  className="text-xl bg-blue-800     hover:bg-blue-600 m-2 px-1 sm:px-5 py-3 rounded text-white"
                 >
                   Menú Principal
                 </button>
@@ -183,7 +190,7 @@ inputCoheteRef.current.focus();
             <form
               onSubmit={handleForm}
               ref={formRef}
-              className="text-4xl sm:mt-0 mt-5 gap-8 flex items-center flex-col w-full h-full justify-center"
+              className="text-4xl sm:mt-0 mt-10 gap-8 flex items-center flex-col w-full h-full justify-center"
             >
               <label htmlFor="cohete" className=" text-center">
                 Nombre del Cohete
@@ -242,7 +249,12 @@ inputCoheteRef.current.focus();
                 >
                   Ingresar
                 </button>
-                <button className="text-xl left-0 sm:absolute bg-red-600 hover:bg-red-700 m-2 px-5 py-3 rounded text-white" onClick={()=>{setNewCohete(true);}}>
+                <button
+                  className="text-xl left-0 sm:absolute bg-red-700 hover:bg-red-950 m-2 px-5 py-3 rounded text-white"
+                  onClick={() => {
+                    setNewCohete(true);
+                  }}
+                >
                   Ingresar cohete fuera de la lista
                 </button>
               </div>

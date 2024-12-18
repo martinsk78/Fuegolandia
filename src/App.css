@@ -11,6 +11,7 @@ html {
   pantallas grandes */
 }
 
+
 @media (max-width: 1024px) {
   html {
     font-size: 15px; /* Ajuste para tablets o pantallas medianas */

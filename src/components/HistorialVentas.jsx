@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 function HistorialVentas({ setMenu, setHistory }) {
   // Recuperar el historial del estado local o del localStorage
   const history = JSON.parse(localStorage.getItem("historial")) || [];
+
+  // Estado para manejar el día seleccionado
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const clearHistory = () => {
     // Limpiar el historial en el estado y en el localStorage
@@ -21,14 +24,53 @@ function HistorialVentas({ setMenu, setHistory }) {
     setHistory(newHistory);
   };
 
+  const filterByDate = (venta) => {
+    const ventaDate = new Date(venta[0].FechaYHora);
+    return (
+      ventaDate.getFullYear() === selectedDate.getFullYear() &&
+      ventaDate.getMonth() === selectedDate.getMonth() &&
+      ventaDate.getDate() === selectedDate.getDate()
+    );
+  };
+
+  const changeDate = (days) => {
+    setSelectedDate((prevDate) => {
+      const newDate = new Date(prevDate);
+      newDate.setDate(prevDate.getDate() + days);
+      return newDate;
+    });
+  };
+
+  const filteredHistory = history.filter(filterByDate);
+
   return (
-    <div className="flex flex-col items-center justify-center w-[100vw] h-[100vh] text-white px-4">
-      <div className="w-[90vw] h-[90vh] bg-black bg-opacity-80 flex items-center justify-center flex-col">
-        <h1 className="text-3xl sm:text-4xl mb-5">Historial de Ventas</h1>
-        <div className="overflow-y-auto bg-white text-black w-full sm:w-[90%] h-[70%]">
-          {history.length > 0 ? (
+    <div className="flex flex-col items-center justify-center w-[100vw] h-auto sm:h-[100vh] text-white ">
+      <div className=" h-full w-full sm:w-[90vw] sm:h-[90vh] bg-black bg-opacity-80 flex items-center justify-center py-2 flex-col">
+        <div className="flex  flex-col sm:flex-row relative w-full items-center justify-center">
+          <h1 className="text-3xl sm:text-4xl  my-5">Historial de Ventas</h1>
+
+          <div className="flex items-center justify-center my-3 sm:absolute right-20">
+            <button
+              onClick={() => changeDate(-1)}
+              className="text-xl bg-blue-800 hover:bg-blue-900 px-3 py-2 rounded text-white mx-2"
+            >
+              ← Día Anterior
+            </button>
+            <h2 className="text-xl text-center">
+              {selectedDate.toLocaleDateString()}
+            </h2>
+            <button
+              onClick={() => changeDate(1)}
+              className="text-xl bg-blue-800 hover:bg-blue-900 px-3 py-2 rounded text-white mx-2"
+            >
+              Día Siguiente →
+            </button>
+          </div>
+        </div>
+        <div className="overflow-y-auto bg-white text-black w-full  sm:w-[90%] h-[40rem]">
+          {filteredHistory.length > 0 ? (
             <div className="flex flex-col">
-              <table className="table-auto text-xl w-full text-center border">
+              <table className="table-auto sm:text-xl text-sm w-full text-center border">
                 <thead>
                   <tr>
                     <td className="border-2 font border-black bg-amber-200 py-2">
@@ -49,18 +91,18 @@ function HistorialVentas({ setMenu, setHistory }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {history.map((venta, index) => (
+                  {filteredHistory.map((venta, index) => (
                     <>
                       <tr className="relative">
                         <td
                           colSpan={4}
-                          className="border-2 cursor-pointer px-4 py-2 border-black bg-green-200"
+                          className="border-2 cursor-pointer px-4 py-2 border-black bg-slate-700 text-white"
                         >
                           Venta {index + 1}
                         </td>
                         <td
                           onClick={() => handleDeleteVenta(venta)}
-                          className="cursor-pointer bg-red-500 hover:bg-red-600 border-2 border-black"
+                          className="cursor-pointer bg-red-500 hover:bg-red-800 border-2 border-black"
                         >
                           X
                         </td>
@@ -99,10 +141,10 @@ function HistorialVentas({ setMenu, setHistory }) {
                           {venta[0].Tipo}
                         </td>
                         <td className="bg-blue-200 border border-slate-500"></td>
-                        <td className="border-2 border-black px-4 py-2">
+                        <td className="border-2 bg-slate-700 text-white border-black px-4 py-2">
                           Total Venta
                         </td>
-                        <td className="border-2 border-black px-4 py-2">
+                        <td className="border-2 text-white bg-slate-700 border-black px-4 py-2">
                           $
                           {venta.reduce(
                             (acc, curr) => acc + curr.precioTotal,
@@ -117,11 +159,11 @@ function HistorialVentas({ setMenu, setHistory }) {
             </div>
           ) : (
             <p className="text-xl text-center p-5">
-              No hay ventas registradas en el historial.
+              No hay ventas registradas para esta fecha.
             </p>
           )}
         </div>
-        <div className="grid grid-cols-3 text-2xl py-2 w-1/2">
+        <div className="grid grid-cols-3 w-full text-2xl py-2 sm:w-1/2">
           <h3 className="text-center">Turno Mañana</h3>
           <h3 className="text-center">Turno Tarde</h3>
           <h3 className="text-center">Total</h3>
@@ -129,10 +171,10 @@ function HistorialVentas({ setMenu, setHistory }) {
           {/* Total de ventas para Turno Mañana */}
           <h3 className="text-center">
             $
-            {history
+            {filteredHistory
               .filter((venta) => {
                 let hora = new Date(venta[0].FechaYHora).getHours();
-                return hora > 9 && hora < 13;
+                return hora >= 9 && hora < 13;
               })
               .reduce((acc, curr) => {
                 let sum =
@@ -147,10 +189,10 @@ function HistorialVentas({ setMenu, setHistory }) {
           {/* Total de ventas para Turno Tarde */}
           <h3 className="text-center">
             $
-            {history
+            {filteredHistory
               .filter((venta) => {
                 let hora = new Date(venta[0].FechaYHora).getHours();
-                return hora > 17 && hora < 21;
+                return hora >= 13 && hora < 22;
               })
               .reduce((acc, curr) => {
                 let sum =
@@ -164,7 +206,7 @@ function HistorialVentas({ setMenu, setHistory }) {
 
           <h3 className="text-center">
             $
-            {history.reduce((acc, curr) => {
+            {filteredHistory.reduce((acc, curr) => {
               let sum =
                 acc +
                 curr.reduce((acc, curr) => {
@@ -174,10 +216,10 @@ function HistorialVentas({ setMenu, setHistory }) {
             }, 0)}
           </h3>
         </div>
-        <div className="flex flex-col sm:flex-row justify-between mt-5 w-full sm:w-[90%] space-y-3 sm:space-y-0 sm:space-x-3">
+        <div className="flex flex-col sm:flex-row justify-between mt-5 w-full sm:w-[50%] space-y-3 sm:space-y-0 sm:space-x-3">
           <button
             onClick={() => setMenu("")}
-            className="text-xl bg-blue-600 hover:bg-blue-700 px-5 py-3 rounded text-white w-full sm:w-auto"
+            className="text-xl bg-blue-800 hover:bg-blue-900 px-5 py-3 rounded text-white w-full sm:w-auto"
           >
             Menú Principal
           </button>
@@ -195,7 +237,7 @@ function HistorialVentas({ setMenu, setHistory }) {
           </button>
           <button
             onClick={clearHistory}
-            className="text-xl bg-red-600 hover:bg-red-700 px-5 py-3 rounded text-white w-full sm:w-auto"
+            className="text-xl bg-red-800 hover:bg-red-700 px-5 py-3 rounded text-white w-full sm:w-auto"
           >
             Limpiar Historial
           </button>
