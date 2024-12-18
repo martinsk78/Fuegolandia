@@ -1,136 +1,135 @@
 [
-    {
-      "name": "Fosforito",
-      "price": 2860
-    },
-    {
-      "name": "Florerito",
-      "price": 1600
-    },
-    {
-      "name": "Estallo",
-      "price": 6212
-    },
-    {
-      "name": "Bengalita",
-      "price": 6320
-    },
-    {
-      "name": "Batería",
-      "price": 7500
-    },
-    {
-      "name": "Mariposa",
-      "price": 4000
-    },
-    {
-      "name": "Candela x 5 luces",
-      "price": 4700
-    },
-    {
-      "name": "Candela x10 luces",
-      "price": 2700
-    },
-    {
-      "name": "Candela x20 luces",
-      "price": 3900
-    },
-    {
-      "name": "Candela x30 luces",
-      "price": 4940
-    },
-    {
-      "name": "Candela x50 luces",
-      "price": 8880
-    },
-    {
-      "name": "Candela x80 luces",
-      "price": 15847
-    },
-    {
-      "name": "Estrellita",
-      "price": 28500
-    },
-    {
-      "name": "Cañita Silbadora",
-      "price": 8400
-    },
-    {
-      "name": "Abejita",
-      "price": 1800
-    },
-    {
-      "name": "Huevito de Dragón",
-      "price": 4153
-    },
-    {
-      "name": "Matabrujas Pack X10",
-      "price": 45000
-    },
-    
-    {
-      "name": "Matabrujas X5",
-      "price": 4500
-    },
-    {
-      "name": "Show de Perlas x48",
-      "price": 2900
-    },
-    {
-      "name": "Show de Perlas x96",
-      "price": 5700
-    },
-    {
-      "name": "Mortero Shell 1 1/2\"",
-      "price": 27000
-    },
-    {
-      "name": "Mortero Shell 2\"",
-      "price": 28000
-    },
-    {
-      "name": "Globos Aerostáticos",
-      "price": 2800
-    },
-    {
-      "name": "Caña Mega Efecto",
-      "price": 19000
-    },
-    {
-      "name": "Caña con Paracaídas",
-      "price": 3800
-    },
-    {
-      "name": "Base Misil x16",
-      "price": 1891
-    },
-    {
-      "name": "Base Misil x25",
-      "price": 2900
-    },
-    {
-      "name": "Base Misil x50",
-      "price": 5000
-    },
-    {
-      "name": "Base Misil x100",
-      "price": 9400
-    },
-    {
-      "name": "Volcancitos",
-      "price": 3800
-    },
-    {
-      "name": "Morteritos",
-      "price": 5900
-    },
-    {
-      "name": "Caña Bomba",
-      "price": 11500
-    },
-    {
-      "name": "Mortero 12 tiros + 1 bomba",
-      "price": 4550
-    }
-  ]
-  
+  {
+    "name": "Fosforito",
+    "price": 2860
+  },
+  {
+    "name": "Florerito",
+    "price": 1600
+  },
+  {
+    "name": "Estallo",
+    "price": 6300
+  },
+  {
+    "name": "Bengalita",
+    "price": 6320
+  },
+  {
+    "name": "Batería",
+    "price": 5000
+  },
+  {
+    "name": "Mariposa",
+    "price": 4000
+  },
+  {
+    "name": "Candela x 5 luces",
+    "price": 4400
+  },
+  {
+    "name": "Candela x10 luces",
+    "price": 2700
+  },
+  {
+    "name": "Candela x20 luces",
+    "price": 3900
+  },
+  {
+    "name": "Candela x30 luces",
+    "price": 4940
+  },
+  {
+    "name": "Candela x50 luces",
+    "price": 8880
+  },
+  {
+    "name": "Candela x80 luces",
+    "price": 15847
+  },
+  {
+    "name": "Estrellita",
+    "price": 28500
+  },
+  {
+    "name": "Cañita Silbadora",
+    "price": 8400
+  },
+  {
+    "name": "Abejita",
+    "price": 1800
+  },
+  {
+    "name": "Huevito de Dragón",
+    "price": 4153
+  },
+  {
+    "name": "Matabrujas Pack",
+    "price": 24800
+  },
+
+  {
+    "name": "Matabrujas X5",
+    "price": 2500
+  },
+  {
+    "name": "Show de Perlas x48",
+    "price": 2900
+  },
+  {
+    "name": "Show de Perlas x96",
+    "price": 5700
+  },
+  {
+    "name": "Mortero Shell 1 1/2\"",
+    "price": 27000
+  },
+  {
+    "name": "Mortero Shell 2\"",
+    "price": 28000
+  },
+  {
+    "name": "Globos Aerostáticos",
+    "price": 2800
+  },
+  {
+    "name": "Caña Mega Efecto",
+    "price": 19000
+  },
+  {
+    "name": "Caña con Paracaídas",
+    "price": 3800
+  },
+  {
+    "name": "Base Misil x16",
+    "price": 1891
+  },
+  {
+    "name": "Base Misil x25",
+    "price": 2900
+  },
+  {
+    "name": "Base Misil x50",
+    "price": 5000
+  },
+  {
+    "name": "Base Misil x100",
+    "price": 9400
+  },
+  {
+    "name": "Volcancitos",
+    "price": 3800
+  },
+  {
+    "name": "Morteritos",
+    "price": 5900
+  },
+  {
+    "name": "Caña Bomba",
+    "price": 11500
+  },
+  {
+    "name": "Mortero 12 tiros + 1 bomba",
+    "price": 4550 
+  }
+]

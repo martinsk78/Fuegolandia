@@ -1,9 +1,9 @@
-import { React, useState } from "react";
-import cohetes from "../preciosMayorista.json";
+import { React, useEffect, useState, useRef } from "react";
+import cohetes from "../preciosMinorista.json";
 
 function MinoristaMenu({ setMenu, setHistory }) {
   const [search, setSearch] = useState("");
-  const [cantidad, setCantidad] = useState(1);
+  const [cantidad, setCantidad] = useState('');
   const [list, setList] = useState([]);
   const [matches, setMatches] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(-1); // Índice seleccionado con teclado
@@ -11,42 +11,74 @@ function MinoristaMenu({ setMenu, setHistory }) {
   const [newCoheteName, setNewCoheteName] = useState("");
   const [newCohetePrice, setNewCohetePrice] = useState();
   const [newCoheteQuantity, setNewCoheteQuantity] = useState();
-  const handleForm = (e) => {
-    e.preventDefault();
-    const selectedCohete = cohetes.find(
-      (cohete) => cohete.name.toLowerCase() === search.toLowerCase()
-    );
-    if (selectedCohete) {
-      let repeatedIndex = list.findIndex((cohete) => {
-        return cohete.name === selectedCohete.name;
-      });
-      if (repeatedIndex === -1) {
-        setList([
-          ...list,
-          {
-            ...selectedCohete,
-            cantidad: parseInt(cantidad) || 1,
-            precioTotal: (parseInt(cantidad) || 1) * selectedCohete.price,
-          },
-        ]);
-      } else {
-        setList((prevList) => {
-          return prevList.map((cohete) => {
-            return cohete.name === selectedCohete.name
-              ? {
-                  ...selectedCohete,
-                  cantidad: parseInt(cantidad) + cohete.cantidad,
-                  precioTotal:
-                    (parseInt(cantidad) + cohete.cantidad) * cohete.price,
-                }
-              : cohete;
-          });
-        });
+
+  const inputCoheteRef = useRef(null)
+  const inputCantidadRef = useRef(null)
+  const inputNewCoheteNameRef = useRef(null)
+  const inputNewCohetePriceRef = useRef(null)
+  const inputNewCoheteQuantityRef = useRef(null)
+
+  const formRef = useRef(null)
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Enter" && formRef.current) {
+        }
+    };
+    window.addEventListener("keypress", handleKeyPress);
+   
+  }, []);
+
+  useEffect(()=>{
+    if(inputCoheteRef.current){
+inputCoheteRef.current.focus();
+    }
+  },[list])
+
+  useEffect(()=>{
+      if(newCohete){
+        inputNewCoheteNameRef.current.focus()
       }
-      setSearch("");
-      setCantidad(1);
-      setMatches([]);
-      setSelectedIndex(-1);
+  }, [newCohete])
+  const handleForm = (e) => {
+
+    e.preventDefault();
+    if(search && cantidad){
+      const selectedCohete = cohetes.find(
+        (cohete) => cohete.name.toLowerCase() === search.toLowerCase()
+      );
+      if (selectedCohete) {
+        let repeatedIndex = list.findIndex((cohete) => {
+          return cohete.name === selectedCohete.name;
+        });
+        if (repeatedIndex === -1) {
+          setList([
+            ...list,
+            {
+              ...selectedCohete,
+              cantidad: parseInt(cantidad) || 1,
+              precioTotal: (parseInt(cantidad) || 1) * selectedCohete.price,
+            },
+          ]);
+        } else {
+          setList((prevList) => {
+            return prevList.map((cohete) => {
+              return cohete.name === selectedCohete.name
+                ? {
+                    ...selectedCohete,
+                    cantidad: parseInt(cantidad) + cohete.cantidad,
+                    precioTotal:
+                      (parseInt(cantidad) + cohete.cantidad) * cohete.price,
+                  }
+                : cohete;
+            });
+          });
+        }
+        setSearch("");
+        setCantidad('');
+        setMatches([]);
+        setSelectedIndex(-1);
+      }    
     }
   };
 
@@ -75,9 +107,11 @@ function MinoristaMenu({ setMenu, setHistory }) {
         setSelectedIndex((prev) => (prev > 0 ? prev - 1 : matches.length - 1));
       } else if (e.key === "Enter" && selectedIndex >= 0) {
         // Selecciona la opción con Enter
+        e.preventDefault()
         setSearch(matches[selectedIndex].name);
         setMatches([]);
         setSelectedIndex(-1);
+        inputCantidadRef?.current.focus()
       }
     }
   };
@@ -96,7 +130,7 @@ function MinoristaMenu({ setMenu, setHistory }) {
   const handleVenta = () => {
     if (list.length > 0) {
       setHistory((prevHistory) => {
-        list[0].FechaYHora = new Date().toLocaleString() + "";
+        list[0].FechaYHora = new Date();
         list[0].Tipo = "Minorista";
 
         return [...prevHistory, [...list]];
@@ -148,7 +182,8 @@ function MinoristaMenu({ setMenu, setHistory }) {
             <hr />
             <form
               onSubmit={handleForm}
-              className="text-4xl gap-8 flex items-center flex-col w-full h-full justify-center"
+              ref={formRef}
+              className="text-4xl sm:mt-0 mt-5 gap-8 flex items-center flex-col w-full h-full justify-center"
             >
               <label htmlFor="cohete" className=" text-center">
                 Nombre del Cohete
@@ -161,8 +196,12 @@ function MinoristaMenu({ setMenu, setHistory }) {
                   value={search}
                   onChange={handleSearchChange}
                   onKeyDown={handleKeyDown}
+                  
                   id="cohete"
+                  ref={inputCoheteRef}
                   className="text-black p-2 text-xl border h-10 border-black relative w-full"
+                
+
                 />
                 {matches.length > 0 && (
                   <ul className="absolute top-10 left-0 w-full bg-white text-black border border-gray-300 overflow-y-auto">
@@ -192,17 +231,18 @@ function MinoristaMenu({ setMenu, setHistory }) {
                 name="cantidad"
                 onChange={(e) => setCantidad(e.target.value)}
                 id="cantidad"
+                ref={inputCantidadRef}
                 value={cantidad}
                 className="text-black text-xl p-2 border h-10 border-black w-1/2"
               />
               <div className="relative w-full items-center justify-center flex flex-col sm:flex-row">
-                <button
+              <button
                   type="submit"
                   className="text-xl bg-blue-600 hover:bg-blue-700 m-2 px-5 py-3 rounded text-white"
                 >
                   Ingresar
                 </button>
-                <button className="text-xl left-0 sm:absolute bg-red-600 hover:bg-red-700 m-2 px-5 py-3 rounded text-white" onClick={()=>{setNewCohete(true)}}>
+                <button className="text-xl left-0 sm:absolute bg-red-600 hover:bg-red-700 m-2 px-5 py-3 rounded text-white" onClick={()=>{setNewCohete(true);}}>
                   Ingresar cohete fuera de la lista
                 </button>
               </div>
@@ -275,8 +315,14 @@ function MinoristaMenu({ setMenu, setHistory }) {
                 Nombre del cohete
               </label>
               <input
+                ref={inputNewCoheteNameRef}
                 autoComplete="off"
                 type="text"
+                onKeyDown={(e)=>{
+                  if(e.key === 'Enter'){
+                    inputNewCohetePriceRef.current.focus();
+                  }
+                }}
                 name="nuevoCoheteNombre"
                 onChange={(e) => setNewCoheteName(e.target.value)}
                 id="nuevoCoheteNombre"
@@ -287,6 +333,12 @@ function MinoristaMenu({ setMenu, setHistory }) {
                 Precio
               </label>
               <input
+                ref={inputNewCohetePriceRef}
+                onKeyDown={(e)=>{
+                  if(e.key === 'Enter'){
+                    inputNewCoheteQuantityRef.current.focus();
+                  }
+                }}
                 autoComplete="off"
                 type="text"
                 name="nuevoCohetePrecio"
@@ -299,6 +351,8 @@ function MinoristaMenu({ setMenu, setHistory }) {
                 Cantidad
               </label>
               <input
+                ref={inputNewCoheteQuantityRef}
+                
                 autoComplete="off"
                 type="text"
                 name="nuevoCoheteCantidad"
