@@ -13,7 +13,7 @@
   },
   {
     "name": "Bengalita",
-    "price": 6320
+    "price": 6300
   },
   {
     "name": "Batería",
@@ -37,7 +37,7 @@
   },
   {
     "name": "Candela x30 luces",
-    "price": 4940
+    "price": 4900
   },
   {
     "name": "Candela x50 luces",
@@ -45,7 +45,7 @@
   },
   {
     "name": "Candela x80 luces",
-    "price": 15847
+    "price": 15900
   },
   {
     "name": "Estrellita",
@@ -61,11 +61,11 @@
   },
   {
     "name": "Huevito de Dragón",
-    "price": 4153
+    "price": 4200
   },
   {
     "name": "Matabrujas Pack",
-    "price": 24800
+    "price": 24
   },
 
   {
@@ -98,15 +98,15 @@
   },
   {
     "name": "Caña con Paracaídas",
-    "price": 3800
+    "price": 4000
   },
   {
     "name": "Base Misil x16",
-    "price": 1891
+    "price": 1900
   },
   {
     "name": "Base Misil x25",
-    "price": 2900
+    "price": 2000
   },
   {
     "name": "Base Misil x50",
@@ -122,7 +122,7 @@
   },
   {
     "name": "Morteritos",
-    "price": 5900
+    "price": 6000
   },
   {
     "name": "Caña Bomba",
