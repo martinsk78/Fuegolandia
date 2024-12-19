@@ -104,6 +104,7 @@ function MayoristaMenu({ setMenu, setHistory }) {
     if (matches.length > 0) {
       if (e.key === "ArrowDown") {
         // Mueve la selección hacia abajo
+        console.log('holaa')
         setSelectedIndex((prev) => (prev < matches.length - 1 ? prev + 1 : 0));
       } else if (e.key === "ArrowUp") {
         // Mueve la selección hacia arriba
