@@ -14,7 +14,6 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("historial", JSON.stringify(history));
-    console.log(history);
   }, [history]);
 
   // Renderizado condicional fuera de una función anónima

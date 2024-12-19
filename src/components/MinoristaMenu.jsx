@@ -156,6 +156,10 @@ inputCoheteRef.current.focus();
       setNewCohete(false);
     }
   };
+  const formatNumber = (number) => {
+    return number.toLocaleString("es-AR"); // Formato para Argentina con puntos como separador de miles
+  };
+  
   return (
     <div className="flex items-center justify-center relative w-[100vw] h-full sm:h-[100vh] text-white">
       <div className="bg-black flex sm:p-10 w-full h-full sm:w-[90%] sm:h-[90%] bg-opacity-80">

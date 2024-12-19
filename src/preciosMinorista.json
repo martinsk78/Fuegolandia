@@ -278,5 +278,13 @@
   {
     "name": "Gladiador",
     "price": 95000
+  },
+  {
+    "name":"Combo Kid",
+    "price":5000
+  },
+  {
+    "name":"Combo Kid",
+    "price":5000
   }
 ]

@@ -166,9 +166,10 @@ function HistorialVentas({ setMenu, setHistory }) {
             </p>
           )}
         </div>
-        <div className="grid grid-cols-3 w-full text-2xl py-2 sm:w-1/2">
+        <div className="grid grid-cols-4 w-full text-2xl py-2 sm:w-1/2">
           <h3 className="text-center">Turno Mañana</h3>
           <h3 className="text-center">Turno Tarde</h3>
+          <h3 className="text-center">Total Ganancia</h3>
           <h3 className="text-center">Total</h3>
 
           {/* Total de ventas para Turno Mañana */}
@@ -206,6 +207,20 @@ function HistorialVentas({ setMenu, setHistory }) {
                 return sum;
               }, 0)}
           </h3>
+          <h3 className="text-center">
+            $
+            {filteredHistory
+              
+              .reduce((acc, curr) => {
+                let sum =
+                  acc +
+                  curr.reduce((accc, currr) => {
+                    return accc + currr.precioTotal;
+                  }, 0)  * (curr[0].Tipo === 'Mayorista' ? 0.3 : 0.7);
+                return sum ;
+              }, 0)}
+          </h3>
+          
 
           <h3 className="text-center">
             $
