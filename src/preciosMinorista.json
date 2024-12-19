@@ -1,72 +1,282 @@
 [
-  { "name": "Abejita", "price": 2500 },
-  { "name": "Bengalita x1", "price": 1000 },
-  { "name": "Bengalita Display", "price": 8500 },
-  { "name": "Batería x1", "price": 500 },
-  { "name": "Batería Display", "price": 10000 },
-  { "name": "Base Misil x16 x1", "price": 2500 },
-  { "name": "Base Misil x16 Display", "price": 10000 },
-  { "name": "Base Misil x25 x1", "price": 2700 },
-  { "name": "Base Misil x25 Display", "price": 10800 },
-  { "name": "Base Misil x50", "price": 6500 },
-  { "name": "Base Misil x100", "price": 12500 },
-  { "name": "Candela 5 tiros x12 unidades x1", "price": 500 },
-  { "name": "Candela 5 tiros x12 unidades Display", "price": 6000 },
-  { "name": "Candela 10 tiros x1", "price": 600 },
-  { "name": "Candela 10 tiros Display", "price": 3500 },
-  { "name": "Candela 20 tiros x1", "price": 900 },
-  { "name": "Candela 20 tiros Display", "price": 5000 },
-  { "name": "Candela 30 tiros x1", "price": 1100 },
-  { "name": "Candela 30 tiros Display", "price": 6500 },
-  { "name": "Candela 50 tiros x1", "price": 2000 },
-  { "name": "Candela 50 tiros Display", "price": 11500 },
-  { "name": "Candela 80 tiros x1", "price": 3500 },
-  { "name": "Candela 80 tiros Display", "price": 21000 },
-  { "name": "Caña Bomba x1", "price": 2500 },
-  { "name": "Caña Bomba Display", "price": 15000 },
-  { "name": "Caña con Paracaídas x1", "price": 1000 },
-  { "name": "Caña con Paracaídas Display", "price": 5000 },
-  { "name": "Fosforito x1", "price": 100 },
-  { "name": "Fosforito Display", "price": 3000 },
-  { "name": "Florerito x1", "price": 200 },
-  { "name": "Florerito Display", "price": 2000 },
-  { "name": "Estrellita x1", "price": 400 },
-  { "name": "Estrellita Display", "price": 37900 },
-  { "name": "Estallo x1", "price": 250 },
-  { "name": "Estallo Caja", "price": 8500 },
-  { "name": "Huevo de Dragón x1", "price": 500 },
-  { "name": "Huevo de Dragón Display", "price": 5500 },
-  { "name": "Matabrujas x1", "price": 1000 },
-  { "name": "Matabrujas Display", "price": 5000 },
-  { "name": "Matabrujas Caja", "price": 31500 },
-  { "name": "Cañita Silbadora Docena", "price": 1800 },
-  { "name": "Cañita Silbadora Display", "price": 11000 },
-  { "name": "Globo", "price": 3500 },
-  { "name": "Volcán", "price": 5000 },
-  { "name": "Super T1", "price": 5000 },
-  { "name": "Super T2 x1", "price": 7000 },
-  { "name": "Super T2 Display", "price": 12000 },
-  { "name": "Mariposa x1", "price": 1000 },
-  { "name": "Mariposa Display", "price": 5000 },
-  { "name": "Mega Efecto x1", "price": 6500 },
-  { "name": "Mega Efecto Display", "price": 25000 },
-  { "name": "Show 48 Perlas x1", "price": 4000 },
-  { "name": "Show 48 Perlas Display", "price": 15000 },
-  { "name": "Show 96 Perlas x1", "price": 7500 },
-  { "name": "Show 96 Perlas Display", "price": 29000 },
-  { "name": "Morterito Display", "price": 8000 },
-  { "name": "Mortero 2da Dimensión", "price": 10000 },
-  { "name": "Bomba Shell 1/12\"", "price": 35000 },
-  { "name": "Bomba Shell 2\"", "price": 28000 },
-  { "name": "Cleopatra", "price": 40000 },
-  { "name": "Afrodita", "price": 90000 },
-  { "name": "Minotauro", "price": 90000 },
-  { "name": "Cronos", "price": 80000 },
-  { "name": "Oasis", "price": 62000 },
-  { "name": "Victoria", "price": 63000 },
-  { "name": "Manhatan", "price": 54000 },
-  { "name": "Coliseo", "price": 12000 },
-  { "name": "Variedad", "price": 16000 },
-  { "name": "Lluvia de Fuego", "price": 95000 },
-  { "name": "Gladiador", "price": 95000 }
+  {
+    "name": "Abejita",
+    "price": 2500
+  },
+  {
+    "name": "Bengalita x1",
+    "price": 1000
+  },
+  {
+    "name": "Bengalita Display",
+    "price": 8500
+  },
+  {
+    "name": "Batería x1",
+    "price": 500
+  },
+  {
+    "name": "Batería Display",
+    "price": 10000
+  },
+  {
+    "name": "Base Misil x16 x1",
+    "price": 2500
+  },
+  {
+    "name": "Base Misil x16 Display",
+    "price": 10000
+  },
+  {
+    "name": "Base Misil x25 x1",
+    "price": 2700
+  },
+  {
+    "name": "Base Misil x25 Display",
+    "price": 10800
+  },
+  {
+    "name": "Base Misil x50",
+    "price": 6500
+  },
+  {
+    "name": "Base Misil x100",
+    "price": 12500
+  },
+  {
+    "name": "Candela 5 tiros x12 unidades x1",
+    "price": 500
+  },
+  {
+    "name": "Candela 5 tiros x12 unidades Display",
+    "price": 6000
+  },
+  {
+    "name": "Candela 10 tiros x1",
+    "price": 600
+  },
+  {
+    "name": "Candela 10 tiros Display",
+    "price": 3500
+  },
+  {
+    "name": "Candela 20 tiros x1",
+    "price": 900
+  },
+  {
+    "name": "Candela 20 tiros Display",
+    "price": 5000
+  },
+  {
+    "name": "Candela 30 tiros x1",
+    "price": 1100
+  },
+  {
+    "name": "Candela 30 tiros Display",
+    "price": 6500
+  },
+  {
+    "name": "Candela 50 tiros x1",
+    "price": 2000
+  },
+  {
+    "name": "Candela 50 tiros Display",
+    "price": 11500
+  },
+  {
+    "name": "Candela 80 tiros x1",
+    "price": 3500
+  },
+  {
+    "name": "Candela 80 tiros Display",
+    "price": 21000
+  },
+  {
+    "name": "Caña Bomba x1",
+    "price": 2500
+  },
+  {
+    "name": "Caña Bomba Display",
+    "price": 15000
+  },
+  {
+    "name": "Caña con Paracaídas x1",
+    "price": 1000
+  },
+  {
+    "name": "Caña con Paracaídas Display",
+    "price": 5000
+  },
+  {
+    "name": "Fosforito x1",
+    "price": 100
+  },
+  {
+    "name": "Fosforito Display",
+    "price": 3000
+  },
+  {
+    "name": "Florerito x1",
+    "price": 200
+  },
+  {
+    "name": "Florerito Display",
+    "price": 2000
+  },
+  {
+    "name": "Estrellita x1",
+    "price": 400
+  },
+  {
+    "name": "Estrellita Display",
+    "price": 37900
+  },
+  {
+    "name": "Estallo x1",
+    "price": 250
+  },
+  {
+    "name": "Estallo Caja",
+    "price": 8500
+  },
+  {
+    "name": "Huevo de Dragón x1",
+    "price": 500
+  },
+  {
+    "name": "Huevo de Dragón Display",
+    "price": 5500
+  },
+  {
+    "name": "Matabrujas x1",
+    "price": 1000
+  },
+  {
+    "name": "Matabrujas Display",
+    "price": 5000
+  },
+  {
+    "name": "Matabrujas Caja",
+    "price": 31500
+  },
+  {
+    "name": "Cañita Silbadora Docena",
+    "price": 1800
+  },
+  {
+    "name": "Cañita Silbadora Display",
+    "price": 11000
+  },
+  {
+    "name": "Globo",
+    "price": 3500
+  },
+  {
+    "name": "Volcán",
+    "price": 5000
+  },
+  {
+    "name": "Super T1",
+    "price": 5000
+  },
+  {
+    "name": "Super T2 x1",
+    "price": 7000
+  },
+  {
+    "name": "Super T2 Display",
+    "price": 12000
+  },
+  {
+    "name": "Mariposa x1",
+    "price": 1000
+  },
+  {
+    "name": "Mariposa Display",
+    "price": 5000
+  },
+  {
+    "name": "Mega Efecto x1",
+    "price": 6500
+  },
+  {
+    "name": "Mega Efecto Display",
+    "price": 25000
+  },
+  {
+    "name": "Show 48 Perlas x1",
+    "price": 4000
+  },
+  {
+    "name": "Show 48 Perlas Display",
+    "price": 15000
+  },
+  {
+    "name": "Show 96 Perlas x1",
+    "price": 7500
+  },
+  {
+    "name": "Show 96 Perlas Display",
+    "price": 29000
+  },
+  {
+    "name": "Morterito Display",
+    "price": 8000
+  },
+  {
+    "name": "Mortero 2da Dimensión",
+    "price": 10000
+  },
+  {
+    "name": "Bomba Shell 1/12\"",
+    "price": 35000
+  },
+  {
+    "name": "Bomba Shell 2\"",
+    "price": 28000
+  },
+  {
+    "name": "Cleopatra",
+    "price": 40000
+  },
+  {
+    "name": "Afrodita",
+    "price": 90000
+  },
+  {
+    "name": "Minotauro",
+    "price": 90000
+  },
+  {
+    "name": "Cronos",
+    "price": 80000
+  },
+  {
+    "name": "Oasis",
+    "price": 62000
+  },
+  {
+    "name": "Victoria",
+    "price": 63000
+  },
+  {
+    "name": "Manhatan",
+    "price": 54000
+  },
+  {
+    "name": "Coliseo",
+    "price": 12000
+  },
+  {
+    "name": "Variedad",
+    "price": 16000
+  },
+  {
+    "name": "Lluvia de Fuego",
+    "price": 95000
+  },
+  {
+    "name": "Gladiador",
+    "price": 95000
+  }
 ]

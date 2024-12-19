@@ -64,10 +64,9 @@
     "price": 4200
   },
   {
-    "name": "Matabrujas Pack",
-    "price": 24
+    "name": "Matabrujas Caja",
+    "price": 24800
   },
-
   {
     "name": "Matabrujas X5",
     "price": 2500
@@ -130,6 +129,46 @@
   },
   {
     "name": "Mortero 12 tiros + 1 bomba",
-    "price": 4550 
+    "price": 4550
+  },
+  {
+    "name": "Manhattan 19 Tiros",
+    "price": 53300
+  },
+  {
+    "name": "Show Variedades",
+    "price": 15600
+  },
+  {
+    "name": "Coliseo 12 Tiros",
+    "price": 11180
+  },
+  {
+    "name": "Cleopatra",
+    "price": 40300
+  },
+  {
+    "name": "Gladiador",
+    "price": 44200
+  },
+  {
+    "name": "Afrodita",
+    "price": 54600
+  },
+  {
+    "name": "Minotauro",
+    "price": 44200
+  },
+  {
+    "name": "Cronos",
+    "price": 59800
+  },
+  {
+    "name": "Victoria",
+    "price": 63000
+  },
+  {
+    "name": "Lluvia de Fuego",
+    "price": 95000
   }
 ]

@@ -211,19 +211,26 @@ inputCoheteRef.current.focus();
 
                 />
                 {matches.length > 0 && (
-                  <ul className="absolute top-10 left-0 w-full bg-white text-black border border-gray-300 overflow-y-auto">
+                  <ul className="absolute top-10 z-20 left-0 w-full bg-white text-black border border-gray-300 overflow-y-auto">
                     {matches.map((match, index) => (
-                      <li
-                        key={index}
-                        onClick={() => handleMatchClick(match.name)}
-                        className={`p-2 cursor-pointer text-xl ${
+                      <div
+                        className={`flex items-center  bg-white ${
                           index === selectedIndex
-                            ? "bg-gray-300"
+                            ? "bg-gray-200"
                             : "hover:bg-gray-200"
                         }`}
                       >
-                        {match.name}
-                      </li>
+                        <h3
+                          key={index}
+                          onClick={() => handleMatchClick(match.name)}
+                          className="p-2 relative  w-full cursor-pointer text-xl"
+                        >
+                          {match.name}
+                        </h3>
+                        <h3 className="text-xl p-2 text-gray-700 ">
+                          ${match.price}
+                        </h3>
+                      </div>
                     ))}
                   </ul>
                 )}

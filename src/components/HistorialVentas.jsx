@@ -73,19 +73,19 @@ function HistorialVentas({ setMenu, setHistory }) {
               <table className="table-auto sm:text-xl text-sm w-full text-center border">
                 <thead>
                   <tr>
-                    <td className="border-2 font border-black bg-amber-200 py-2">
+                    <td className="border-2 font border-black bg-slate-500 text-white font-medium py-2">
                       Fecha y Hora
                     </td>
-                    <td className="border-2 border-black bg-red-200 py-2">
+                    <td className="border-2 border-black bg-slate-500 text-white font-medium py-2">
                       Nombre
                     </td>
-                    <td className="border-2 border-black bg-green-200 py-2">
+                    <td className="border-2 border-black bg-slate-500 text-white font-medium py-2">
                       Cantidad
                     </td>
-                    <td className="border-2 border-black bg-cyan-200 py-2">
+                    <td className="border-2 border-black bg-slate-500 text-white font-medium py-2">
                       Precio Unitario
                     </td>
-                    <td className="border-2 border-black bg-indigo-200 py-2">
+                    <td className="border-2 border-black bg-slate-500 text-white font-medium py-2">
                       Precio Total
                     </td>
                   </tr>
@@ -96,7 +96,7 @@ function HistorialVentas({ setMenu, setHistory }) {
                       <tr className="relative">
                         <td
                           colSpan={4}
-                          className="border-2 cursor-pointer px-4 py-2 border-black bg-slate-700 text-white"
+                          className="border-2 font-bold cursor-pointer px-4 py-2 border-black bg-yellow-400 text-black"
                         >
                           Venta {index + 1}
                         </td>
@@ -110,7 +110,7 @@ function HistorialVentas({ setMenu, setHistory }) {
                       {venta.map((item) => {
                         return (
                           <tr key={item.FechaYHora}>
-                            <td className="border border-black py-2">
+                            <td className="border border-black py-2 font-semibold">
                               {item.FechaYHora
                                 ? new Date(item.FechaYHora).toLocaleString()
                                 : ""}
@@ -131,17 +131,17 @@ function HistorialVentas({ setMenu, setHistory }) {
                         );
                       })}
                       <tr>
-                        <td className="bg-blue-200 border border-slate-500">
+                        <td className="bg-blue-200 font-semibold border border-slate-500">
                           {new Date(venta[0].FechaYHora).getHours() >= 9 &&
                           new Date(venta[0].FechaYHora).getHours() < 13
                             ? "Turno Mañana"
                             : "Turno Tarde"}
                         </td>
-                        <td className="bg-blue-200 border border-slate-500">
+                        <td className="bg-blue-200 font-semibold border border-slate-500">
                           {venta[0].Tipo}
                         </td>
                         <td className="bg-blue-200 border border-slate-500"></td>
-                        <td className="border-2 bg-slate-700 text-white border-black px-4 py-2">
+                        <td className="border-2 bg-slate-700 text-white font-semibold border-black px-4 py-2">
                           Total Venta
                         </td>
                         <td className="border-2 text-white bg-slate-700 border-black px-4 py-2">
