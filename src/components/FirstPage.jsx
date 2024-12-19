@@ -13,7 +13,7 @@ function FirstPage({ setMenu }) {
         <div className="gap-5 flex flex-col sm:flex-row mt-12 mb-20">
           <button
             onClick={() => setMenu("minorista")}
-            className="text-2xl sm:text-4xl bg-green-600 hover:bg-green-700 px-5 py-3 rounded text-white"
+            className="text-2xl sm:text-4xl bg-green-800 hover:bg-green-700 px-5 py-3 rounded text-white"
           >
             Menú Minorista
           </button>
@@ -26,7 +26,7 @@ function FirstPage({ setMenu }) {
         </div>
         <button
           onClick={() => setMenu("historial")}
-          className="text-2xl sm:text-4xl bg-red-600 hover:bg-red-700 px-5 py-3 rounded text-white"
+          className="text-2xl sm:text-4xl bg-red-800 hover:bg-red-700 px-5 py-3 rounded text-white"
         >
           Historial
         </button>

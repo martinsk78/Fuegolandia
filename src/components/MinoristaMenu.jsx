@@ -216,7 +216,7 @@ inputCoheteRef.current.focus();
                       <div
                         className={`flex items-center  bg-white ${
                           index === selectedIndex
-                            ? "bg-gray-200"
+                            ? "bg-gray-400"
                             : "hover:bg-gray-200"
                         }`}
                       >

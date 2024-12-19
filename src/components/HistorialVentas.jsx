@@ -140,7 +140,10 @@ function HistorialVentas({ setMenu, setHistory }) {
                         <td className="bg-blue-200 font-semibold border border-slate-500">
                           {venta[0].Tipo}
                         </td>
-                        <td className="bg-blue-200 border border-slate-500"></td>
+                        <td className="bg-blue-200 border border-slate-500 font-medium">Ganancia ({venta[0].Tipo === 'Mayorista' ? '30' : '70'}%) ${Math.floor(venta.reduce(
+                            (acc, curr) => acc + curr.precioTotal,
+                            0
+                          )*(venta[0].Tipo === 'Mayorista' ? 0.3 : 0.7))}</td>
                         <td className="border-2 bg-slate-700 text-white font-semibold border-black px-4 py-2">
                           Total Venta
                         </td>
