@@ -11,41 +11,41 @@ function FirstPage() {
   // Estados
   const [name, setName] = useState(() => localStorage.getItem("name") || "");
   const [isNameSet, setIsNameSet] = useState(!!localStorage.getItem("name"));
-  const [isBlocked, setIsBlocked] = useState(
-    () => localStorage.getItem("isBlocked") === "true"
-  );
+  // const [isBlocked, setIsBlocked] = useState(
+  //   () => localStorage.getItem("isBlocked") === "true"
+  // );
 
-  useEffect(() => {
-    if(!allowedNames.includes (localStorage.getItem('name'))){
-      setIsBlocked(true)
-    }
-    if (isBlocked) {
-      alert("Acceso bloqueado. No puedes ingresar.");
-    }
-  }, [isBlocked]);
+  // useEffect(() => {
+    // if(!allowedNames.includes (localStorage.getItem('name'))){
+    //   setIsBlocked(true)
+    // }
+    // if (isBlocked) {
+    //   alert("Acceso bloqueado. No puedes ingresar.");
+    // }
+  // }, [isBlocked]);
 
   const handleForm = (e) => {
     e.preventDefault();
 
     // Validar si el nombre está permitido
-    if (!allowedNames.includes(name)) {
-      localStorage.setItem("isBlocked", "true");
-      setIsBlocked(true);
-      return;
-    }
+    // if (!allowedNames.includes(name)) {
+    //   localStorage.setItem("isBlocked", "true");
+    //   setIsBlocked(true);
+    //   return;
+    // }
 
     // Si el nombre es válido, permitir acceso
     localStorage.setItem("name", name);
     setIsNameSet(true);
   };
 
-  if (isBlocked) {
-    return (
-      <div className="h-[100vh] w-[100vw] flex items-center justify-center bg-red-600 text-white text-3xl">
-        Acceso bloqueado. No puedes ingresar.
-      </div>
-    );
-  }
+  // if (isBlocked) {
+  //   return (
+  //     <div className="h-[100vh] w-[100vw] flex items-center justify-center bg-red-600 text-white text-3xl">
+  //       Acceso bloqueado. No puedes ingresar.
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center relative">
