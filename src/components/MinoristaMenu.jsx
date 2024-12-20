@@ -141,7 +141,7 @@ function MinoristaMenu({ setMenu }) {
       list.forEach(async (item) => {
         const venta = {
           fecha_hora: `${new Date()}`,
-          tipo: "Mayorista",
+          tipo: "Minorista",
           id_venta: uuidv4(),
           ...item,
         };
@@ -185,7 +185,7 @@ function MinoristaMenu({ setMenu }) {
             <h1 className="text-4xl m-5">FUEGOLANDIA</h1>
 
             <div className="flex sm:flex-row flex-col justify-between w-full">
-              <h2 className="text-2xl p-3 m-2">Menu Mayorista</h2>
+              <h2 className="text-2xl p-3 m-2">Menu Minorista</h2>
               <div className="flex">
                 <button
                   onClick={() => setMenu("historial")}
