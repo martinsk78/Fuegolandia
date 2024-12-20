@@ -7,23 +7,16 @@ import HistorialVentas from "./components/HistorialVentas";
 
 function App() {
   const [menu, setMenu] = useState("");
-  const [history, setHistory] = useState(() => {
-    let recoverHistory = localStorage.getItem("historial");
-    return recoverHistory ? JSON.parse(recoverHistory) : [];
-  });
 
-  useEffect(() => {
-    localStorage.setItem("historial", JSON.stringify(history));
-  }, [history]);
 
   // Renderizado condicional fuera de una función anónima
   let content;
   if (menu === "minorista") {
-    content = <MinoristaMenu setMenu={setMenu} setHistory={setHistory} />;
+    content = <MinoristaMenu setMenu={setMenu} />;
   } else if (menu === "mayorista") {
-    content = <MayoristaMenu setMenu={setMenu} setHistory={setHistory} />;
+    content = <MayoristaMenu setMenu={setMenu} />;
   } else if(menu === "historial"){
-    content = <HistorialVentas setMenu={setMenu} setHistory={setHistory} />;
+    content = <HistorialVentas setMenu={setMenu} />;
 
   }else{
     content = <FirstPage setMenu={setMenu} />;

@@ -1,54 +1,54 @@
 import { React, useEffect, useState, useRef } from "react";
 import cohetes from "../preciosMinorista.json";
+import { db } from "../firebaseConfig";
+import { addDoc, collection } from "firebase/firestore";
 
-function MinoristaMenu({ setMenu, setHistory }) {
-    const [search, setSearch] = useState("");
-     const [cantidad, setCantidad] = useState(null);
-     const [list, setList] = useState([]);
-     const [matches, setMatches] = useState([]);
-     const [selectedIndex, setSelectedIndex] = useState(-1); // Índice seleccionado con teclado
- 
-     const [newCohete, setNewCohete] = useState(false);
-     const [newCoheteName, setNewCoheteName] = useState("");
-     const [newCohetePrice, setNewCohetePrice] = useState();
-     const [newCoheteQuantity, setNewCoheteQuantity] = useState();
- 
-     const inputCoheteRef = useRef(null)
-     const inputCantidadRef = useRef(null)
-     const inputNewCoheteNameRef = useRef(null)
-     const inputNewCohetePriceRef = useRef(null)
-     const inputNewCoheteQuantityRef = useRef(null)
- 
-     const formRef = useRef(null)
- 
-     const [deletedCohete, setDeletedCohete] = useState(false);
- 
+function MinoristaMenu({ setMenu }) {
+  const [search, setSearch] = useState("");
+  const [cantidad, setCantidad] = useState(null);
+  const [list, setList] = useState([]);
+  const [matches, setMatches] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(-1); // Índice seleccionado con teclado
+
+  const [newCohete, setNewCohete] = useState(false);
+  const [newCoheteName, setNewCoheteName] = useState("");
+  const [newCohetePrice, setNewCohetePrice] = useState();
+  const [newCoheteQuantity, setNewCoheteQuantity] = useState();
+
+  const inputCoheteRef = useRef(null);
+  const inputCantidadRef = useRef(null);
+  const inputNewCoheteNameRef = useRef(null);
+  const inputNewCohetePriceRef = useRef(null);
+  const inputNewCoheteQuantityRef = useRef(null);
+
+  const formRef = useRef(null);
+
+  const [deletedCohete, setDeletedCohete] = useState(false);
+
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Enter" && formRef.current) {
-        }
+      }
     };
     window.addEventListener("keypress", handleKeyPress);
-   
   }, []);
 
-  useEffect(()=>{
-    if(inputCoheteRef.current && deletedCohete !== true){
-inputCoheteRef.current.focus();
-    }else{
-      setDeletedCohete(false)
+  useEffect(() => {
+    if (inputCoheteRef.current && deletedCohete === false) {
+      inputCoheteRef.current.focus();
+    } else {
+      setDeletedCohete(false);
     }
-  },[list])
+  }, [list]);
 
-  useEffect(()=>{
-      if(newCohete){
-        inputNewCoheteNameRef.current.focus()
-      }
-  }, [newCohete])
+  useEffect(() => {
+    if (newCohete) {
+      inputNewCoheteNameRef.current.focus();
+    }
+  }, [newCohete]);
   const handleForm = (e) => {
-
     e.preventDefault();
-    if(search && cantidad){
+    if (search && cantidad) {
       const selectedCohete = cohetes.find(
         (cohete) => cohete.name.toLowerCase() === search.toLowerCase()
       );
@@ -80,10 +80,10 @@ inputCoheteRef.current.focus();
           });
         }
         setSearch("");
-        setCantidad('');
+        setCantidad("");
         setMatches([]);
         setSelectedIndex(-1);
-      }    
+      }
     }
   };
 
@@ -112,17 +112,18 @@ inputCoheteRef.current.focus();
         setSelectedIndex((prev) => (prev > 0 ? prev - 1 : matches.length - 1));
       } else if (e.key === "Enter" && selectedIndex >= 0) {
         // Selecciona la opción con Enter
-        e.preventDefault()
+        e.preventDefault();
         setSearch(matches[selectedIndex].name);
         setMatches([]);
         setSelectedIndex(-1);
-        inputCantidadRef?.current.focus()
+        inputCantidadRef?.current.focus();
       }
     }
   };
 
   const handleMatchClick = (name) => {
-    inputCantidadRef.current.focus()
+    inputCantidadRef.current.focus();
+
     setSearch(name);
     setMatches([]);
     setSelectedIndex(-1);
@@ -134,32 +135,46 @@ inputCoheteRef.current.focus();
     setList((prevList) => prevList.filter((cohete) => cohete.name !== name));
   };
 
-  const handleVenta = () => {
+  const handleVenta = async () => {
     if (list.length > 0) {
-      setHistory((prevHistory) => {
-        list[0].FechaYHora = new Date();
-        list[0].Tipo = "Minorista";
-
-        return [...prevHistory, [...list]];
+      list.forEach(async (item) => {
+        const venta = {
+          fecha_hora: `${new Date()}`,
+          tipo: "Mayorista",
+          ...item,
+        };
+        try {
+          // Corrected the addDoc call
+          await addDoc(collection(db, "ventas"), venta);
+          console.log(venta   )
+          // Clear the list after the sale is processed
+        } catch (error) {
+          console.error("Error al guardar la venta:", error);
+        }
       });
+  
       setList([]);
     }
   };
+
   const handleNewCohete = (e) => {
     e.preventDefault();
-    if(newCoheteName && newCohetePrice && newCoheteQuantity){
-
-      setList([...list, {name:newCoheteName, price:parseInt(newCohetePrice), cantidad:parseInt(newCoheteQuantity), precioTotal:parseInt(newCohetePrice)*parseInt(newCoheteQuantity)}])
-      setNewCoheteName('')
+    if (newCoheteName && newCohetePrice && newCoheteQuantity) {
+      setList([
+        ...list,
+        {
+          name: newCoheteName,
+          price: parseInt(newCohetePrice),
+          cantidad: parseInt(newCoheteQuantity),
+          precioTotal: parseInt(newCohetePrice) * parseInt(newCoheteQuantity),
+        },
+      ]);
+      setNewCoheteName("");
       setNewCoheteQuantity(0);
       setNewCohetePrice(0);
       setNewCohete(false);
     }
   };
-  const formatNumber = (number) => {
-    return number.toLocaleString("es-AR"); // Formato para Argentina con puntos como separador de miles
-  };
-  
   return (
     <div className="flex items-center justify-center relative w-[100vw] h-full sm:h-[100vh] text-white">
       <div className="bg-black flex sm:p-10 w-full h-full sm:w-[90%] sm:h-[90%] bg-opacity-80">
@@ -168,7 +183,7 @@ inputCoheteRef.current.focus();
             <h1 className="text-4xl m-5">FUEGOLANDIA</h1>
 
             <div className="flex sm:flex-row flex-col justify-between w-full">
-              <h2 className="text-2xl p-3 m-2">Menu Minorista</h2>
+              <h2 className="text-2xl p-3 m-2">Menu Mayorista</h2>
               <div className="flex">
                 <button
                   onClick={() => setMenu("historial")}
@@ -184,7 +199,7 @@ inputCoheteRef.current.focus();
                 </button>
                 <button
                   onClick={() => setMenu("mayorista")}
-                  className="text-xl bg-yellow-600    hover:bg-yellow-700 m-2 px-1 sm:px-5 py-3 rounded text-white"
+                  className="text-xl bg-yellow-800    hover:bg-yellow-700 m-2 px-1 sm:px-5 py-3 rounded text-white"
                 >
                   Menú Mayorista
                 </button>
@@ -207,15 +222,12 @@ inputCoheteRef.current.focus();
                   value={search}
                   onChange={handleSearchChange}
                   onKeyDown={handleKeyDown}
-                  
                   id="cohete"
                   ref={inputCoheteRef}
                   className="text-black p-2 text-xl border h-10 border-black relative w-full"
-                
-
                 />
                 {matches.length > 0 && (
-                  <ul className="absolute top-10 z-20 left-0 w-full bg-white text-black border border-gray-300 overflow-y-auto">
+                  <div className="z-20 absolute top-10 left-0 w-full bg-white  text-black border border-gray-300 overflow-y-auto">
                     {matches.map((match, index) => (
                       <div
                         className={`flex items-center  bg-white ${
@@ -236,7 +248,7 @@ inputCoheteRef.current.focus();
                         </h3>
                       </div>
                     ))}
-                  </ul>
+                  </div>
                 )}
               </div>
 
@@ -254,7 +266,7 @@ inputCoheteRef.current.focus();
                 className="text-black text-xl p-2 border h-10 border-black w-1/2"
               />
               <div className="relative w-full items-center justify-center flex flex-col sm:flex-row">
-              <button
+                <button
                   type="submit"
                   className="text-xl bg-blue-600 hover:bg-blue-700 m-2 px-5 py-3 rounded text-white"
                 >
@@ -310,7 +322,7 @@ inputCoheteRef.current.focus();
                   </h3>
                   <button
                     className="font-bold text-red-700 border bg-red-300 border-red-400 hover:bg-red-400"
-                    onClick={() => handleRemove(cohete.name)} // Remover cohete al hacer clic
+                    onClick={() => handleRemove(cohete.name)}
                   >
                     X
                   </button>
@@ -333,16 +345,19 @@ inputCoheteRef.current.focus();
       {newCohete ? (
         <div className="absolute z-30 h-[100vh] flex items-center justify-center w-[100vw] bg-slate-800 bg-opacity-80 ">
           <div className="relative h-[70vh] w-[50vw] bg-slate-900 ">
-            <form onSubmit={handleNewCohete} className="flex flex-col justify-center items-center h-full w-full gap-5 text-3xl">
-            <label htmlFor="nuevoCoheteNombre" className="m-3">
+            <form
+              onSubmit={handleNewCohete}
+              className="flex flex-col justify-center items-center h-full w-full gap-5 text-3xl"
+            >
+              <label htmlFor="nuevoCoheteNombre" className="m-3">
                 Nombre del cohete
               </label>
               <input
                 ref={inputNewCoheteNameRef}
                 autoComplete="off"
                 type="text"
-                onKeyDown={(e)=>{
-                  if(e.key === 'Enter'){
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
                     inputNewCohetePriceRef.current.focus();
                   }
                 }}
@@ -357,8 +372,8 @@ inputCoheteRef.current.focus();
               </label>
               <input
                 ref={inputNewCohetePriceRef}
-                onKeyDown={(e)=>{
-                  if(e.key === 'Enter'){
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
                     inputNewCoheteQuantityRef.current.focus();
                   }
                 }}
@@ -375,7 +390,6 @@ inputCoheteRef.current.focus();
               </label>
               <input
                 ref={inputNewCoheteQuantityRef}
-                
                 autoComplete="off"
                 type="text"
                 name="nuevoCoheteCantidad"
@@ -384,11 +398,18 @@ inputCoheteRef.current.focus();
                 value={newCoheteQuantity}
                 className="text-black text-xl p-2 border shadow-md shadow-white  h-10 border-black w-1/2"
               />
-              <button className="border rounded p-3" action='submit'>Ingresar</button>
+              <button className="border rounded p-3" action="submit">
+                Ingresar
+              </button>
             </form>
-            <icon className='text-white absolute top-2 text-4xl right-5 cursor-pointer' onClick={()=>{
-              setNewCohete(false)
-            }}>X</icon>
+            <icon
+              className="text-white absolute top-2 text-4xl right-5 cursor-pointer"
+              onClick={() => {
+                setNewCohete(false);
+              }}
+            >
+              X
+            </icon>
           </div>
         </div>
       ) : (

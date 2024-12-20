@@ -1,7 +1,9 @@
 import { React, useEffect, useState, useRef } from "react";
 import cohetes from "../preciosMayorista.json";
+import { db } from "../firebaseConfig";
+import { addDoc, collection } from "firebase/firestore";
 
-function MayoristaMenu({ setMenu, setHistory }) {
+function MayoristaMenu({ setMenu }) {
   const [search, setSearch] = useState("");
   const [cantidad, setCantidad] = useState(null);
   const [list, setList] = useState([]);
@@ -104,7 +106,6 @@ function MayoristaMenu({ setMenu, setHistory }) {
     if (matches.length > 0) {
       if (e.key === "ArrowDown") {
         // Mueve la selección hacia abajo
-        console.log('holaa')
         setSelectedIndex((prev) => (prev < matches.length - 1 ? prev + 1 : 0));
       } else if (e.key === "ArrowUp") {
         // Mueve la selección hacia arriba
@@ -134,17 +135,28 @@ function MayoristaMenu({ setMenu, setHistory }) {
     setList((prevList) => prevList.filter((cohete) => cohete.name !== name));
   };
 
-  const handleVenta = () => {
+  const handleVenta = async () => {
     if (list.length > 0) {
-      setHistory((prevHistory) => {
-        list[0].FechaYHora = new Date();
-        list[0].Tipo = "Mayorista";
-
-        return [...prevHistory, [...list]];
+      list.forEach(async (item) => {
+        const venta = {
+          fecha_hora: `${new Date()}`,
+          tipo: "Mayorista",
+          ...item,
+        };
+        try {
+          // Corrected the addDoc call
+          await addDoc(collection(db, "ventas"), venta);
+          console.log(venta   )
+          // Clear the list after the sale is processed
+        } catch (error) {
+          console.error("Error al guardar la venta:", error);
+        }
       });
+  
       setList([]);
     }
   };
+
   const handleNewCohete = (e) => {
     e.preventDefault();
     if (newCoheteName && newCohetePrice && newCoheteQuantity) {

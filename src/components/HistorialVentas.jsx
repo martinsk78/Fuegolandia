@@ -1,9 +1,40 @@
-import React, { useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { db } from "../firebaseConfig";
 
-function HistorialVentas({ setMenu, setHistory }) {
+function HistorialVentas({ setMenu }) {
+
+  const [loading, setLoading] = useState(true);
+  const [history, setHistory] = useState([]);
+  useEffect(()=>{
+    const fetchData = async () =>{
+      try {
+        const querySnapshot = await getDocs(collection(db, 'ventas'));
+        const fetchedData = await querySnapshot.docs.map(doc => doc.data())
+        const groupedItems = fetchedData.reduce((acc, item) => {
+          const fechaHora = item.fecha_hora; // Usamos la fecha y hora completa como clave para agrupar
+        
+          if (!acc[fechaHora]) {
+            acc[fechaHora] = [];
+          }
+        
+          acc[fechaHora].push(item);
+          return acc;
+        }, {});
+        setHistory(Object.values(groupedItems));
+        console.log(history)
+
+      } catch (error) {
+          console.error('Error fetching data: ', error)
+          
+
+        } finally{
+        setLoading(false)
+      }
+    }
+    fetchData()
+  },[])
   // Recuperar el historial del estado local o del localStorage
-  const history = JSON.parse(localStorage.getItem("historial")) || [];
-
   // Estado para manejar el día seleccionado
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -16,7 +47,7 @@ function HistorialVentas({ setMenu, setHistory }) {
   const handleDeleteVenta = (venta) => {
     // Filtrar las ventas que no coinciden con la venta que queremos eliminar
     const newHistory = history.filter((ventaNoActual) => {
-      return ventaNoActual[0].FechaYHora !== venta[0].FechaYHora;
+      return ventaNoActual[0].fecha_hora !== venta[0].fecha_hora;
     });
 
     // Actualizar el estado y el localStorage con el historial filtrado
@@ -25,7 +56,7 @@ function HistorialVentas({ setMenu, setHistory }) {
   };
 
   const filterByDate = (venta) => {
-    const ventaDate = new Date(venta[0].FechaYHora);
+    const ventaDate = new Date(venta[0].fecha_hora);
     return (
       ventaDate.getFullYear() === selectedDate.getFullYear() &&
       ventaDate.getMonth() === selectedDate.getMonth() &&
@@ -107,12 +138,12 @@ function HistorialVentas({ setMenu, setHistory }) {
                           X
                         </td>
                       </tr>
-                      {venta.map((item) => {
+                      {venta.map((item, index) => {
                         return (
-                          <tr key={item.FechaYHora}>
+                          <tr key={item.fecha_hora}>
                             <td className="border border-black py-2 font-semibold">
-                              {item.FechaYHora
-                                ? new Date(item.FechaYHora).toLocaleString()
+                              {index === 0
+                                ? new Date(item.fecha_hora).toLocaleString()
                                 : ""}
                             </td>
                             <td className="border border-black py-2">
@@ -132,18 +163,18 @@ function HistorialVentas({ setMenu, setHistory }) {
                       })}
                       <tr>
                         <td className="bg-blue-200 font-semibold border border-slate-500">
-                          {new Date(venta[0].FechaYHora).getHours() >= 9 &&
-                          new Date(venta[0].FechaYHora).getHours() < 13
+                          {new Date(venta[0].fecha_hora).getHours() >= 9 &&
+                          new Date(venta[0].fecha_hora).getHours() < 13
                             ? "Turno Mañana"
                             : "Turno Tarde"}
                         </td>
                         <td className="bg-blue-200 font-semibold border border-slate-500">
-                          {venta[0].Tipo}
+                          {venta[0].tipo}
                         </td>
-                        <td className="bg-blue-200 border border-slate-500 font-medium">Ganancia ({venta[0].Tipo === 'Mayorista' ? '30' : '70'}%) ${Math.floor(venta.reduce(
+                        <td className="bg-blue-200 border border-slate-500 font-medium">Ganancia ({venta[0].tipo === 'Mayorista' ? '30' : '70'}%) ${Math.floor(venta.reduce(
                             (acc, curr) => acc + curr.precioTotal,
                             0
-                          )*(venta[0].Tipo === 'Mayorista' ? 0.3 : 0.7))}</td>
+                          )*(venta[0].tipo === 'Mayorista' ? 0.3 : 0.7))}</td>
                         <td className="border-2 bg-slate-700 text-white font-semibold border-black px-4 py-2">
                           Total Venta
                         </td>
@@ -177,7 +208,7 @@ function HistorialVentas({ setMenu, setHistory }) {
             $
             {filteredHistory
               .filter((venta) => {
-                let hora = new Date(venta[0].FechaYHora).getHours();
+                let hora = new Date(venta[0].fecha_hora).getHours();
                 return hora >= 9 && hora < 13;
               })
               .reduce((acc, curr) => {
@@ -195,7 +226,7 @@ function HistorialVentas({ setMenu, setHistory }) {
             $
             {filteredHistory
               .filter((venta) => {
-                let hora = new Date(venta[0].FechaYHora).getHours();
+                let hora = new Date(venta[0].fecha_hora).getHours();
                 return hora >= 13 && hora < 22;
               })
               .reduce((acc, curr) => {
@@ -216,7 +247,7 @@ function HistorialVentas({ setMenu, setHistory }) {
                   acc +
                   curr.reduce((accc, currr) => {
                     return accc + currr.precioTotal;
-                  }, 0)  * (curr[0].Tipo === 'Mayorista' ? 0.3 : 0.7);
+                  }, 0)  * (curr[0].tipo === 'Mayorista' ? 0.3 : 0.7);
                 return sum ;
               }, 0)}
           </h3>
