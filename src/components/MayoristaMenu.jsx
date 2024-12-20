@@ -246,7 +246,11 @@ function MayoristaMenu({ setMenu }) {
                   <div className="z-20 absolute top-10 left-0 w-full bg-white  text-black border border-gray-300 overflow-y-auto">
                     {matches.map((match, index) => (
                       <div
-                        className={`flex items-center  bg-white `}
+                        className={`flex items-center  bg-white ${
+                          index === selectedIndex
+                            ? "bg-blue-400"
+                            : "hover:bg-gray-200"
+                        }`}
                       >
                         <h3
                           key={index}
