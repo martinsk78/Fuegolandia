@@ -1,18 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dragon from "../imgs/dragonGif.gif";
 import { useNavigate } from "react-router-dom";
 
 function FirstPage() {
   const navigate = useNavigate();
 
+  // Lista de nombres permitidos
+  const allowedNames = ["Martin", "Pablo", "Abby", "Ana", "Eli", "Graci","Leo", "Brisa", "Leon"];
+
+  // Estados
   const [name, setName] = useState(() => localStorage.getItem("name") || "");
   const [isNameSet, setIsNameSet] = useState(!!localStorage.getItem("name"));
+  const [isBlocked, setIsBlocked] = useState(
+    () => localStorage.getItem("isBlocked") === "true"
+  );
+
+  useEffect(() => {
+    if (isBlocked) {
+      alert("Acceso bloqueado. No puedes ingresar.");
+    }
+  }, [isBlocked]);
 
   const handleForm = (e) => {
     e.preventDefault();
+
+    // Validar si el nombre está permitido
+    if (!allowedNames.includes(name)) {
+      localStorage.setItem("isBlocked", "true");
+      setIsBlocked(true);
+      return;
+    }
+
+    // Si el nombre es válido, permitir acceso
     localStorage.setItem("name", name);
-    setIsNameSet(true); // Confirmamos que el nombre está seteado
+    setIsNameSet(true);
   };
+
+  if (isBlocked) {
+    return (
+      <div className="h-[100vh] w-[100vw] flex items-center justify-center bg-red-600 text-white text-3xl">
+        Acceso bloqueado. No puedes ingresar.
+      </div>
+    );
+  }
 
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center relative">
