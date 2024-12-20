@@ -1,7 +1,7 @@
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
-
+import dragon from '../imgs/dragonGif.gif'
 function HistorialVentas({ setMenu }) {
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState([]);
@@ -90,6 +90,8 @@ function HistorialVentas({ setMenu }) {
 
   return (
     <div className="flex flex-col items-center justify-center w-[100vw] h-auto sm:h-[100vh] text-white ">
+      <img alt='fuegolandia dragon' src={dragon} className='absolute top-5 left-16 w-[15rem]'/>
+      
       <div className=" h-full w-full sm:w-[90vw] sm:h-[90vh] bg-black bg-opacity-80 flex items-center justify-center py-2 flex-col">
         <div className="flex  flex-col sm:flex-row relative w-full items-center justify-center">
           <h1 className="text-3xl sm:text-4xl  my-5">Historial de Ventas</h1>

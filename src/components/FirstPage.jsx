@@ -1,8 +1,9 @@
 import React from 'react';
-
+import dragon from '../imgs/dragonGif.gif'
 function FirstPage({ setMenu }) {
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center">
+      <img alt='fuegolandia dragon' src={dragon} className='absolute top-5 right-16 w-[25rem]'/>
       <div className="bg-black bg-opacity-80 h-[90vh] w-[90vw] flex items-center justify-center flex-col px-4">
         <h2 className="text-[3.3rem] sm:text-[7rem] md:text-[10rem] text-center text-white font-serif p-0 m-0">
           FuegoLandia

@@ -3,7 +3,7 @@ import cohetes from "../preciosMinorista.json";
 import { db } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
-
+import dragon from '../imgs/dragonGif.gif'
 function MinoristaMenu({ setMenu }) {
   const [search, setSearch] = useState("");
   const [cantidad, setCantidad] = useState(null);
@@ -179,13 +179,15 @@ function MinoristaMenu({ setMenu }) {
   };
   return (
     <div className="flex items-center justify-center relative w-[100vw] h-full sm:h-[100vh] text-white">
+      <img alt='fuegolandia dragon' src={dragon} className='absolute top-5 right-0 sm:right-16 w-[15rem] '/>
+
       <div className="bg-black flex sm:p-10 w-full h-full sm:w-[90%] sm:h-[90%] bg-opacity-80">
         <div className="w-full h-full sm:flex-row flex-col flex gap-10">
           <div className="sm:w-1/2 flex flex-col ">
             <h1 className="text-4xl m-5">FUEGOLANDIA</h1>
 
             <div className="flex sm:flex-row flex-col justify-between w-full">
-              <h2 className="text-2xl p-3 m-2">Menu Minorista</h2>
+              <h2 className="text-3xl font-bold p-3 m-2 underline">Menu Minorista</h2>
               <div className="flex">
                 <button
                   onClick={() => setMenu("historial")}
@@ -201,7 +203,7 @@ function MinoristaMenu({ setMenu }) {
                 </button>
                 <button
                   onClick={() => setMenu("mayorista")}
-                  className="text-xl bg-yellow-800    hover:bg-yellow-700 m-2 px-1 sm:px-5 py-3 rounded text-white"
+                  className="text-xl  bg-yellow-800    hover:bg-yellow-700 m-2 px-1 sm:px-5 py-3 rounded text-white"
                 >
                   Menú Mayorista
                 </button>
