@@ -1,39 +1,44 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
 
 function HistorialVentas({ setMenu }) {
-
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState([]);
-  useEffect(()=>{
-    const fetchData = async () =>{
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'ventas'));
-        const fetchedData = await querySnapshot.docs.map(doc => doc.data())
-        const groupedItems = fetchedData.reduce((acc, item) => {
+        const querySnapshot = await getDocs(collection(db, "ventas"));
+        const fetchedData = querySnapshot.docs.map(doc => ({ 
+          id: doc.id,  // Agregar el id del documento
+          ...doc.data() 
+        }));        const groupedItems = fetchedData.reduce((acc, item) => {
           const fechaHora = item.fecha_hora; // Usamos la fecha y hora completa como clave para agrupar
-        
+
           if (!acc[fechaHora]) {
             acc[fechaHora] = [];
           }
-        
+
           acc[fechaHora].push(item);
           return acc;
         }, {});
-        setHistory(Object.values(groupedItems));
-        console.log(history)
+        const groupedItemsSorted = Object.keys(groupedItems)
+          .sort((a, b) => new Date(a) - new Date(b)) // Comparar como fechas
+          .reduce((sortedObj, key) => {
+            sortedObj[key] = groupedItems[key];
+            return sortedObj;
+          }, {});
 
+        setHistory(Object.values(groupedItemsSorted));
+        console.log(history);
       } catch (error) {
-          console.error('Error fetching data: ', error)
-          
-
-        } finally{
-        setLoading(false)
+        console.error("Error fetching data: ", error);
+      } finally {
+        setLoading(false);
       }
-    }
-    fetchData()
-  },[])
+    };
+    fetchData();
+  }, []);
   // Recuperar el historial del estado local o del localStorage
   // Estado para manejar el día seleccionado
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -44,15 +49,24 @@ function HistorialVentas({ setMenu }) {
     setHistory([]);
   };
 
-  const handleDeleteVenta = (venta) => {
-    // Filtrar las ventas que no coinciden con la venta que queremos eliminar
-    const newHistory = history.filter((ventaNoActual) => {
-      return ventaNoActual[0].fecha_hora !== venta[0].fecha_hora;
-    });
+  const handleDeleteVenta = async (venta) => {
+    try {
+      // Obtener el id del primer item de la venta (asumimos que todos los items de la venta tienen el mismo id)
+      const ventaId = venta[0].id;
 
-    // Actualizar el estado y el localStorage con el historial filtrado
-    localStorage.setItem("historial", JSON.stringify(newHistory));
-    setHistory(newHistory);
+      // Eliminar el documento de la colección 'ventas'
+      await deleteDoc(doc(db, 'ventas', ventaId));
+
+      // Filtrar el historial localmente para eliminar la venta
+      const newHistory = history.filter((ventaNoActual) => ventaNoActual[0].id !== venta[0].id);
+
+      // Actualizar el estado con el historial filtrado
+      setHistory(newHistory);
+
+      console.log('Venta eliminada con éxito');
+    } catch (error) {
+      console.error('Error eliminando venta: ', error);
+    }
   };
 
   const filterByDate = (venta) => {
@@ -171,10 +185,16 @@ function HistorialVentas({ setMenu }) {
                         <td className="bg-blue-200 font-semibold border border-slate-500">
                           {venta[0].tipo}
                         </td>
-                        <td className="bg-blue-200 border border-slate-500 font-medium">Ganancia ({venta[0].tipo === 'Mayorista' ? '30' : '70'}%) ${Math.floor(venta.reduce(
-                            (acc, curr) => acc + curr.precioTotal,
-                            0
-                          )*(venta[0].tipo === 'Mayorista' ? 0.3 : 0.7))}</td>
+                        <td className="bg-blue-200 border border-slate-500 font-medium">
+                          Ganancia (
+                          {venta[0].tipo === "Mayorista" ? "30" : "70"}%) $
+                          {Math.floor(
+                            venta.reduce(
+                              (acc, curr) => acc + curr.precioTotal,
+                              0
+                            ) * (venta[0].tipo === "Mayorista" ? 0.3 : 0.7)
+                          )}
+                        </td>
                         <td className="border-2 bg-slate-700 text-white font-semibold border-black px-4 py-2">
                           Total Venta
                         </td>
@@ -240,18 +260,16 @@ function HistorialVentas({ setMenu }) {
           </h3>
           <h3 className="text-center">
             $
-            {filteredHistory
-              
-              .reduce((acc, curr) => {
-                let sum =
-                  acc +
-                  curr.reduce((accc, currr) => {
-                    return accc + currr.precioTotal;
-                  }, 0)  * (curr[0].tipo === 'Mayorista' ? 0.3 : 0.7);
-                return sum ;
-              }, 0)}
+            {filteredHistory.reduce((acc, curr) => {
+              let sum =
+                acc +
+                curr.reduce((accc, currr) => {
+                  return accc + currr.precioTotal;
+                }, 0) *
+                  (curr[0].tipo === "Mayorista" ? 0.3 : 0.7);
+              return sum;
+            }, 0)}
           </h3>
-          
 
           <h3 className="text-center">
             $

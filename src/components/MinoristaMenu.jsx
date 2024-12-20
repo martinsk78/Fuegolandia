@@ -2,6 +2,7 @@ import { React, useEffect, useState, useRef } from "react";
 import cohetes from "../preciosMinorista.json";
 import { db } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 
 function MinoristaMenu({ setMenu }) {
   const [search, setSearch] = useState("");
@@ -141,6 +142,7 @@ function MinoristaMenu({ setMenu }) {
         const venta = {
           fecha_hora: `${new Date()}`,
           tipo: "Mayorista",
+          id_venta: uuidv4(),
           ...item,
         };
         try {
@@ -232,7 +234,7 @@ function MinoristaMenu({ setMenu }) {
                       <div
                         className={`flex items-center  bg-white ${
                           index === selectedIndex
-                            ? "bg-gray-400"
+                            ? "bg-blue-400"
                             : "hover:bg-gray-200"
                         }`}
                       >
