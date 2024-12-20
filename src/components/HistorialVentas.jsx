@@ -192,7 +192,7 @@ function HistorialVentas({ setMenu }) {
                             venta.reduce(
                               (acc, curr) => acc + curr.precioTotal,
                               0
-                            ) * (venta[0].tipo === "Mayorista" ? 0.3 : 0.7)
+                            ) / (venta[0].tipo === "Mayorista" ? 1.3 : 1.7) * (venta[0].tipo === "Mayorista" ? .3 : 0.7)
                           )}
                         </td>
                         <td className="border-2 bg-slate-700 text-white font-semibold border-black px-4 py-2">
@@ -265,9 +265,8 @@ function HistorialVentas({ setMenu }) {
                 acc +
                 curr.reduce((accc, currr) => {
                   return accc + currr.precioTotal;
-                }, 0) *
-                  (curr[0].tipo === "Mayorista" ? 0.3 : 0.7);
-              return sum;
+                }, 0) / (curr[0].tipo === "Mayorista" ? 1.3 : 1.7) * (curr[0].tipo === "Mayorista" ? .3 : 0.7)
+              return Math.floor(sum);
             }, 0)}
           </h3>
 

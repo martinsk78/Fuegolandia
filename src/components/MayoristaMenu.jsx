@@ -24,7 +24,21 @@ function MayoristaMenu({ setMenu }) {
 
   const formRef = useRef(null);
 
+  const [isMobile, setIsMobile] = useState(false)
+
   const [deletedCohete, setDeletedCohete] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Cambia 768 según el ancho máximo para "móvil"
+    };
+
+    handleResize(); // Ejecutar al cargar
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -232,11 +246,7 @@ function MayoristaMenu({ setMenu }) {
                   <div className="z-20 absolute top-10 left-0 w-full bg-white  text-black border border-gray-300 overflow-y-auto">
                     {matches.map((match, index) => (
                       <div
-                        className={`flex items-center  bg-white ${
-                          index === selectedIndex
-                            ? "bg-blue-400"
-                            : "hover:bg-gray-200"
-                        }`}
+                        className={`flex items-center  bg-white `}
                       >
                         <h3
                           key={index}
