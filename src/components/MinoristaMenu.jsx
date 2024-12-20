@@ -248,7 +248,7 @@ function MinoristaMenu({ setMenu }) {
                         <h3
                           className={`text-xl p-2 text-black ${
                             index === selectedIndex
-                              ? "text-white"
+                              ? "text-blue-600"
                               : ""
                           } `}
                         >
