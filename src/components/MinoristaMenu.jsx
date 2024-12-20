@@ -4,7 +4,10 @@ import { db } from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import dragon from '../imgs/dragonGif.gif'
-function MinoristaMenu({ setMenu }) {
+import { useNavigate } from "react-router-dom";
+function MinoristaMenu() {
+  const navigate = useNavigate()
+  
   const [search, setSearch] = useState("");
   const [cantidad, setCantidad] = useState(null);
   const [list, setList] = useState([]);
@@ -143,6 +146,7 @@ function MinoristaMenu({ setMenu }) {
           fecha_hora: `${new Date()}`,
           tipo: "Minorista",
           id_venta: uuidv4(),
+          vendedor : localStorage.getItem('name'),
           ...item,
         };
         try {
@@ -190,19 +194,19 @@ function MinoristaMenu({ setMenu }) {
               <h2 className="text-3xl font-bold p-3 m-2 underline">Menu Minorista</h2>
               <div className="flex">
                 <button
-                  onClick={() => setMenu("historial")}
+                  onClick={() => navigate("/historial")}
                   className="text-xl     m-2 bg-red-800 hover:bg-red-700 px-1 sm:px-5 py-3 rounded text-white"
                 >
                   Historial
                 </button>
                 <button
-                  onClick={() => setMenu("")}
+                  onClick={() => navigate("/")}
                   className="text-xl bg-blue-800     hover:bg-blue-600 m-2 px-1 sm:px-5 py-3 rounded text-white"
                 >
                   Menú Principal
                 </button>
                 <button
-                  onClick={() => setMenu("mayorista")}
+                  onClick={() => navigate("/mayorista")}
                   className="text-xl  bg-yellow-800    hover:bg-yellow-700 m-2 px-1 sm:px-5 py-3 rounded text-white"
                 >
                   Menú Mayorista

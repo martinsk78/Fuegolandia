@@ -2,7 +2,10 @@ import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
 import dragon from '../imgs/dragonGif.gif'
-function HistorialVentas({ setMenu }) {
+import { useNavigate } from "react-router-dom";
+function HistorialVentas() {
+  const navigate = useNavigate()
+
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState([]);
   useEffect(() => {
@@ -142,7 +145,13 @@ function HistorialVentas({ setMenu }) {
                     <>
                       <tr className="relative">
                         <td
-                          colSpan={4}
+                          colSpan={1}
+                          className="border-2 font-bold cursor-pointer px-4 py-2 border-black bg-yellow-400 text-black"
+                        >
+                          {venta[0].vendedor}
+                        </td>
+                        <td
+                          colSpan={3}
                           className="border-2 font-bold cursor-pointer px-4 py-2 border-black bg-yellow-400 text-black"
                         >
                           Venta {index + 1}
@@ -286,28 +295,22 @@ function HistorialVentas({ setMenu }) {
         </div>
         <div className="flex flex-col sm:flex-row justify-between mt-5 w-full sm:w-[50%] space-y-3 sm:space-y-0 sm:space-x-3">
           <button
-            onClick={() => setMenu("")}
+            onClick={() => navigate("/")}
             className="text-xl bg-blue-800 hover:bg-blue-900 px-5 py-3 rounded text-white w-full sm:w-auto"
           >
             Menú Principal
           </button>
           <button
-            onClick={() => setMenu("minorista")}
+            onClick={() => navigate("/minorista")}
             className="text-xl bg-green-600 hover:bg-green-700 px-5 py-3 rounded text-white w-full sm:w-auto"
           >
             Menú Minorista
           </button>
           <button
-            onClick={() => setMenu("mayorista")}
+            onClick={() => navigate("/mayorista")}
             className="text-xl bg-yellow-600 hover:bg-yellow-700 px-5 py-3 rounded text-white w-full sm:w-auto"
           >
             Menú Mayorista
-          </button>
-          <button
-            onClick={clearHistory}
-            className="text-xl bg-red-800 hover:bg-red-700 px-5 py-3 rounded text-white w-full sm:w-auto"
-          >
-            Limpiar Historial
           </button>
         </div>
       </div>
