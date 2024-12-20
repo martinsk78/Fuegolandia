@@ -234,8 +234,8 @@ function MinoristaMenu({ setMenu }) {
                       <div
                         className={`flex items-center hover:bg-slate-500  ${
                           index === selectedIndex
-                            ? "bg-blue-500"
-                            : "bg-white"
+                            ? "bg-blue-200"
+                            : ""
                         }`}
                       >
                         <h3
