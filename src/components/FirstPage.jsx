@@ -16,6 +16,9 @@ function FirstPage() {
   );
 
   useEffect(() => {
+    if(!allowedNames.includes (localStorage.getItem('name'))){
+      setIsBlocked(true)
+    }
     if (isBlocked) {
       alert("Acceso bloqueado. No puedes ingresar.");
     }
@@ -57,7 +60,7 @@ function FirstPage() {
             onSubmit={handleForm}
             className="w-full flex flex-col items-center justify-center gap-16"
           >
-            <h2 className="text-white text-5xl">Ingrese su nombre:</h2>
+            <h2 className="text-white text-5xl text-center">Ingrese su nombre:</h2>
             <input
               onChange={(e) => setName(e.target.value)}
               value={name}
