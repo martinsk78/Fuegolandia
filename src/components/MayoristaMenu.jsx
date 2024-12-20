@@ -24,7 +24,7 @@ function MayoristaMenu({ setMenu }) {
 
   const formRef = useRef(null);
 
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(false);
 
   const [deletedCohete, setDeletedCohete] = useState(false);
 
@@ -38,7 +38,6 @@ function MayoristaMenu({ setMenu }) {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -156,19 +155,19 @@ function MayoristaMenu({ setMenu }) {
         const venta = {
           fecha_hora: `${new Date()}`,
           tipo: "Mayorista",
-          id_venta :uuidv4(),
+          id_venta: uuidv4(),
           ...item,
         };
         try {
           // Corrected the addDoc call
           await addDoc(collection(db, "ventas"), venta);
-          console.log(venta   )
+          console.log(venta);
           // Clear the list after the sale is processed
         } catch (error) {
           console.error("Error al guardar la venta:", error);
         }
       });
-  
+
       setList([]);
     }
   };
@@ -248,8 +247,8 @@ function MayoristaMenu({ setMenu }) {
                       <div
                         className={`flex items-center  bg-white ${
                           index === selectedIndex
-                            ? "bg-blue-400"
-                            : "hover:bg-gray-200"
+                            ? "bg-blue-500"
+                            : "hover:bg-gray-400"
                         }`}
                       >
                         <h3
@@ -259,7 +258,13 @@ function MayoristaMenu({ setMenu }) {
                         >
                           {match.name}
                         </h3>
-                        <h3 className="text-xl p-2 text-gray-700 ">
+                        <h3
+                          className={`text-xl p-2 text-black ${
+                            index === selectedIndex
+                              ? "text-white"
+                              : ""
+                          } `}
+                        >
                           ${match.price}
                         </h3>
                       </div>

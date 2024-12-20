@@ -234,8 +234,8 @@ function MinoristaMenu({ setMenu }) {
                       <div
                         className={`flex items-center  bg-white ${
                           index === selectedIndex
-                            ? "bg-blue-400"
-                            : "hover:bg-gray-200"
+                            ? "bg-blue-500"
+                            : "hover:bg-gray-400"
                         }`}
                       >
                         <h3
@@ -245,7 +245,13 @@ function MinoristaMenu({ setMenu }) {
                         >
                           {match.name}
                         </h3>
-                        <h3 className="text-xl p-2 text-gray-700 ">
+                        <h3
+                          className={`text-xl p-2 text-black ${
+                            index === selectedIndex
+                              ? "text-white"
+                              : ""
+                          } `}
+                        >
                           ${match.price}
                         </h3>
                       </div>
