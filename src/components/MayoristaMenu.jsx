@@ -150,57 +150,59 @@ function MayoristaMenu({ ventaEditada, setVentaEditada }) {
     setList((prevList) => prevList.filter((cohete) => cohete.name !== name));
   };
 
-  const handleVenta = async () => {
-    // Eliminar ventas existentes en `ventaEditada`
-    if (ventaEditada.length > 0) {
-      try {
-        // Usamos `for...of` para esperar cada promesa de la eliminación
-        for (const venta of ventaEditada) {
-          const fechaHora = venta.fecha_hora;
-          
-          // Eliminar el documento de la colección 'ventas' utilizando fecha_hora
-          const ventaRef = query(
-            collection(db, 'ventas'),
-            where('fecha_hora', '==', fechaHora)
-          );
-          const querySnapshot = await getDocs(ventaRef);
-  
-          // Eliminar el documento encontrado
-          querySnapshot.forEach(async (doc) => {
-            await deleteDoc(doc.ref);
-            console.log("Venta eliminada:", doc.id);
-          });
+   const handleVenta = async () => {
+      // Eliminar ventas existentes en `ventaEditada` 
+      if (ventaEditada.length > 0) {
+        try {
+          // Usamos `for...of` para esperar cada promesa de la eliminación
+          for (const venta of ventaEditada) {
+            const fechaHora = venta.fecha_hora;
+            
+            // Eliminar el documento de la colección 'ventas' utilizando fecha_hora
+            const ventaRef = query(
+              collection(db, 'ventas'),
+              where('fecha_hora', '==', fechaHora)
+            );
+            const querySnapshot = await getDocs(ventaRef);
+    
+            // Eliminar el documento encontrado
+            querySnapshot.forEach(async (doc) => {
+              await deleteDoc(doc.ref);
+              console.log("Venta eliminada:", doc.id);
+            });
+          }
+        } catch (error) {
+          console.error("Error al eliminar las ventas:", error);
         }
-      } catch (error) {
-        console.error("Error al eliminar las ventas:", error);
       }
-    }
-  
-    if (list.length > 0) {
-      // Agregar nuevas ventas
-      try {
-        // Usamos `for...of` para esperar cada promesa de la adición
-        for (const item of list) {
-          const venta = {
-            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${new Date()}`,
-            tipo: "Mayorista",
-            id_venta: uuidv4(),
-            vendedor: localStorage.getItem("name"),
-            ...item,
-          };
-          
-          // Esperamos la adición de la venta
-          await addDoc(collection(db, "ventas"), venta);
-          console.log("Venta guardada:", venta);
+      let newDate = new Date();
+      if (list.length > 0) {
+        // Agregar nuevas ventas
+        try {
+          // Usamos `for...of` para esperar cada promesa de la adición
+          for (const item of list) {
+            const venta = {
+              fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${newDate}`,
+              tipo: "Mayorista",
+              id_venta: uuidv4(),
+              vendedor: localStorage.getItem("name"),
+              ...item,
+            };
+            
+            // Esperamos la adición de la venta
+            await addDoc(collection(db, "ventas"), venta);
+            console.log("Venta guardada:", venta);
+          }
+        } catch (error) {
+          console.error("Error al guardar la venta:", error);
         }
-      } catch (error) {
-        console.error("Error al guardar la venta:", error);
       }
-    }
-  
-    // Limpiar el estado de `list` después de todas las operaciones
-    setList([]);
-  };
+    
+      
+    
+      // Limpiar el estado de `list` después de todas las operaciones
+      setList([]);
+    };
   
   
   
