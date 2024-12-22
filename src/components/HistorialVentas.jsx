@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
 import dragon from '../imgs/dragonGif.gif'
@@ -60,23 +60,34 @@ function HistorialVentas({setVentaEditada}) {
 
   const handleDeleteVenta = async (venta) => {
     try {
-      // Obtener el id del primer item de la venta (asumimos que todos los items de la venta tienen el mismo id)
-      const ventaId = venta[0].id;  
-
-      // Eliminar el documento de la colección 'ventas'
-      await deleteDoc(doc(db, 'ventas', ventaId));
-
+      // Obtener la fecha_hora del primer item de la venta (asumimos que todos los items de la venta tienen la misma fecha_hora)
+      const fechaHora = venta[0].fecha_hora;
+    
+      // Eliminar el documento de la colección 'ventas' utilizando fecha_hora
+      const ventaRef = query(
+        collection(db, 'ventas'),
+        where('fecha_hora', '==', fechaHora)
+      );
+      const querySnapshot = await getDocs(ventaRef);
+  
+      // Eliminar el documento encontrado
+      querySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
+      });
+    
       // Filtrar el historial localmente para eliminar la venta
-      const newHistory = history.filter((ventaNoActual) => ventaNoActual[0].id !== venta[0].id);
-
+      const newHistory = history.filter((ventaNoActual) => ventaNoActual[0].fecha_hora !== fechaHora);
+    
       // Actualizar el estado con el historial filtrado
       setHistory(newHistory);
-
+    
       console.log('Venta eliminada con éxito');
     } catch (error) {
       console.error('Error eliminando venta: ', error);
     }
   };
+  
+  
 
   const filterByDate = (venta) => {
     const ventaDate = new Date(venta[0].fecha_hora);

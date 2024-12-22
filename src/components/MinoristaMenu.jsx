@@ -1,7 +1,7 @@
 import { React, useEffect, useState, useRef } from "react";
 import cohetes from "../preciosMinorista.json";
 import { db } from "../firebaseConfig";
-import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where, writeBatch } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import dragon from "../imgs/dragonGif.gif";
 import { useNavigate } from "react-router-dom";
@@ -40,6 +40,8 @@ function MinoristaMenu({ ventaEditada, setVentaEditada }) {
   useEffect(() => {
     if (ventaEditada) {
       setList(ventaEditada);
+      console.log(ventaEditada)
+    
     }
     return () => {
       setVentaEditada([]);
@@ -150,25 +152,58 @@ function MinoristaMenu({ ventaEditada, setVentaEditada }) {
 
   const handleVenta = async () => {
     if (list.length > 0) {
-     
-        list.forEach(async (item) => {
+      // Agregar nuevas ventas
+      try {
+        // Usamos `for...of` para esperar cada promesa de la adición
+        for (const item of list) {
           const venta = {
-            fecha_hora: `${new Date()}`,
+            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${new Date()}`,
             tipo: "Minorista",
             id_venta: uuidv4(),
             vendedor: localStorage.getItem("name"),
             ...item,
           };
-          try {
-            await addDoc(collection(db, "ventas"), venta);
-            console.log("Venta guardada:", venta);
-          } catch (error) {
-            console.error("Error al guardar la venta:", error);
-          }
-        });
-        setList([]);
+          
+          // Esperamos la adición de la venta
+          await addDoc(collection(db, "ventas"), venta);
+          console.log("Venta guardada:", venta);
+        }
+      } catch (error) {
+        console.error("Error al guardar la venta:", error);
       }
     }
+  
+    // Eliminar ventas existentes en `ventaEditada`
+    if (ventaEditada.length > 0) {
+      try {
+        // Usamos `for...of` para esperar cada promesa de la eliminación
+        for (const venta of ventaEditada) {
+          const fechaHora = venta.fecha_hora;
+          
+          // Eliminar el documento de la colección 'ventas' utilizando fecha_hora
+          const ventaRef = query(
+            collection(db, 'ventas'),
+            where('fecha_hora', '==', fechaHora)
+          );
+          const querySnapshot = await getDocs(ventaRef);
+  
+          // Eliminar el documento encontrado
+          querySnapshot.forEach(async (doc) => {
+            await deleteDoc(doc.ref);
+            console.log("Venta eliminada:", doc.id);
+          });
+        }
+      } catch (error) {
+        console.error("Error al eliminar las ventas:", error);
+      }
+    }
+  
+    // Limpiar el estado de `list` después de todas las operaciones
+    setList([]);
+  };
+  
+  
+  
   
 
   const handleNewCohete = (e) => {

@@ -1,13 +1,12 @@
 import { React, useEffect, useState, useRef } from "react";
 import cohetes from "../preciosMayorista.json";
 import { db } from "../firebaseConfig";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where, writeBatch } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
-import dragon from '../imgs/dragonGif.gif'
+import dragon from "../imgs/dragonGif.gif";
 import { useNavigate } from "react-router-dom";
-
-function MayoristaMenu() {
-  const navigate = useNavigate()
+function MayoristaMenu({ ventaEditada, setVentaEditada }) {
+  const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
   const [cantidad, setCantidad] = useState(null);
@@ -28,20 +27,7 @@ function MayoristaMenu() {
 
   const formRef = useRef(null);
 
-  const [isMobile, setIsMobile] = useState(false);
-
   const [deletedCohete, setDeletedCohete] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Cambia 768 según el ancho máximo para "móvil"
-    };
-
-    handleResize(); // Ejecutar al cargar
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -49,6 +35,17 @@ function MayoristaMenu() {
       }
     };
     window.addEventListener("keypress", handleKeyPress);
+  }, []);
+
+  useEffect(() => {
+    if (ventaEditada) {
+      setList(ventaEditada);
+      console.log(ventaEditada)
+    
+    }
+    return () => {
+      setVentaEditada([]);
+    };
   }, []);
 
   useEffect(() => {
@@ -155,27 +152,59 @@ function MayoristaMenu() {
 
   const handleVenta = async () => {
     if (list.length > 0) {
-      list.forEach(async (item) => {
-        const venta = {
-          fecha_hora: `${new Date()}`,
-          tipo: "Mayorista",
-          id_venta: uuidv4(),
-          vendedor : localStorage.getItem('name'),
-          ...item,
-        };
-        try {
-          // Corrected the addDoc call
+      // Agregar nuevas ventas
+      try {
+        // Usamos `for...of` para esperar cada promesa de la adición
+        for (const item of list) {
+          const venta = {
+            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${new Date()}`,
+            tipo: "Mayorista",
+            id_venta: uuidv4(),
+            vendedor: localStorage.getItem("name"),
+            ...item,
+          };
+          
+          // Esperamos la adición de la venta
           await addDoc(collection(db, "ventas"), venta);
-          console.log(venta);
-          // Clear the list after the sale is processed
-        } catch (error) {
-          console.error("Error al guardar la venta:", error);
+          console.log("Venta guardada:", venta);
         }
-      });
-
-      setList([]);
+      } catch (error) {
+        console.error("Error al guardar la venta:", error);
+      }
     }
+  
+    // Eliminar ventas existentes en `ventaEditada`
+    if (ventaEditada.length > 0) {
+      try {
+        // Usamos `for...of` para esperar cada promesa de la eliminación
+        for (const venta of ventaEditada) {
+          const fechaHora = venta.fecha_hora;
+          
+          // Eliminar el documento de la colección 'ventas' utilizando fecha_hora
+          const ventaRef = query(
+            collection(db, 'ventas'),
+            where('fecha_hora', '==', fechaHora)
+          );
+          const querySnapshot = await getDocs(ventaRef);
+  
+          // Eliminar el documento encontrado
+          querySnapshot.forEach(async (doc) => {
+            await deleteDoc(doc.ref);
+            console.log("Venta eliminada:", doc.id);
+          });
+        }
+      } catch (error) {
+        console.error("Error al eliminar las ventas:", error);
+      }
+    }
+  
+    // Limpiar el estado de `list` después de todas las operaciones
+    setList([]);
   };
+  
+  
+  
+  
 
   const handleNewCohete = (e) => {
     e.preventDefault();
@@ -197,7 +226,11 @@ function MayoristaMenu() {
   };
   return (
     <div className="flex items-center justify-center relative w-[100vw] h-full sm:h-[100vh] text-white">
-      <img alt='fuegolandia dragon' src={dragon} className='absolute top-5 right-0 sm:right-16 w-[15rem]'/>
+      <img
+        alt="fuegolandia dragon"
+        src={dragon}
+        className="absolute top-5 right-0 sm:right-16 w-[15rem] "
+      />
 
       <div className="bg-black flex sm:p-10 w-full h-full sm:w-[90%] sm:h-[90%] bg-opacity-80">
         <div className="w-full h-full sm:flex-row flex-col flex gap-10">
@@ -205,7 +238,9 @@ function MayoristaMenu() {
             <h1 className="text-4xl m-5">FUEGOLANDIA</h1>
 
             <div className="flex sm:flex-row flex-col justify-between w-full">
-              <h2 className="text-3xl p-3 m-2 font-bold underline">Menu Mayorista</h2>
+              <h2 className="text-3xl font-bold p-3 m-2 underline">
+                Menu Mayorista
+              </h2>
               <div className="flex">
                 <button
                   onClick={() => navigate("/historial")}
@@ -221,7 +256,7 @@ function MayoristaMenu() {
                 </button>
                 <button
                   onClick={() => navigate("/minorista")}
-                  className="text-xl bg-green-800    hover:bg-green-700 m-2 px-1 sm:px-5 py-3 rounded text-white"
+                  className="text-xl  bg-green-800    hover:bg-green-700 m-2 px-1 sm:px-5 py-3 rounded text-white"
                 >
                   Menú Minorista
                 </button>
@@ -253,9 +288,7 @@ function MayoristaMenu() {
                     {matches.map((match, index) => (
                       <div
                         className={`flex items-center hover:bg-slate-500  ${
-                          index === selectedIndex
-                            ? "bg-blue-200"
-                            : ""
+                          index === selectedIndex ? "bg-blue-200" : ""
                         }`}
                       >
                         <h3
@@ -267,9 +300,7 @@ function MayoristaMenu() {
                         </h3>
                         <h3
                           className={`text-xl p-2 text-black ${
-                            index === selectedIndex
-                              ? "text-blue-600"
-                              : ""
+                            index === selectedIndex ? "text-blue-600" : ""
                           } `}
                         >
                           ${match.price}
