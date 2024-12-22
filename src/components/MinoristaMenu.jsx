@@ -151,29 +151,7 @@ function MinoristaMenu({ ventaEditada, setVentaEditada }) {
   };
 
   const handleVenta = async () => {
-    if (list.length > 0) {
-      // Agregar nuevas ventas
-      try {
-        // Usamos `for...of` para esperar cada promesa de la adición
-        for (const item of list) {
-          const venta = {
-            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${new Date()}`,
-            tipo: "Minorista",
-            id_venta: uuidv4(),
-            vendedor: localStorage.getItem("name"),
-            ...item,
-          };
-          
-          // Esperamos la adición de la venta
-          await addDoc(collection(db, "ventas"), venta);
-          console.log("Venta guardada:", venta);
-        }
-      } catch (error) {
-        console.error("Error al guardar la venta:", error);
-      }
-    }
-  
-    // Eliminar ventas existentes en `ventaEditada`
+    // Eliminar ventas existentes en `ventaEditada` 
     if (ventaEditada.length > 0) {
       try {
         // Usamos `for...of` para esperar cada promesa de la eliminación
@@ -197,6 +175,29 @@ function MinoristaMenu({ ventaEditada, setVentaEditada }) {
         console.error("Error al eliminar las ventas:", error);
       }
     }
+    if (list.length > 0) {
+      // Agregar nuevas ventas
+      try {
+        // Usamos `for...of` para esperar cada promesa de la adición
+        for (const item of list) {
+          const venta = {
+            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${new Date()}`,
+            tipo: "Minorista",
+            id_venta: uuidv4(),
+            vendedor: localStorage.getItem("name"),
+            ...item,
+          };
+          
+          // Esperamos la adición de la venta
+          await addDoc(collection(db, "ventas"), venta);
+          console.log("Venta guardada:", venta);
+        }
+      } catch (error) {
+        console.error("Error al guardar la venta:", error);
+      }
+    }
+  
+    
   
     // Limpiar el estado de `list` después de todas las operaciones
     setList([]);
@@ -344,7 +345,7 @@ function MinoristaMenu({ ventaEditada, setVentaEditada }) {
                 onClick={handleVenta}
                 className="text-3xl bg-green-600 hover:bg-green-700 m-2 px-5 py-3 rounded text-white"
               >
-                Agregar Venta
+              {ventaEditada.length === 0 ? 'Agregar Venta' : 'Confimar Edicion'}
               </button>
             </form>
             <div className="flex items-center justify-center"></div>

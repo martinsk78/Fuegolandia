@@ -151,28 +151,6 @@ function MayoristaMenu({ ventaEditada, setVentaEditada }) {
   };
 
   const handleVenta = async () => {
-    if (list.length > 0) {
-      // Agregar nuevas ventas
-      try {
-        // Usamos `for...of` para esperar cada promesa de la adición
-        for (const item of list) {
-          const venta = {
-            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${new Date()}`,
-            tipo: "Mayorista",
-            id_venta: uuidv4(),
-            vendedor: localStorage.getItem("name"),
-            ...item,
-          };
-          
-          // Esperamos la adición de la venta
-          await addDoc(collection(db, "ventas"), venta);
-          console.log("Venta guardada:", venta);
-        }
-      } catch (error) {
-        console.error("Error al guardar la venta:", error);
-      }
-    }
-  
     // Eliminar ventas existentes en `ventaEditada`
     if (ventaEditada.length > 0) {
       try {
@@ -195,6 +173,28 @@ function MayoristaMenu({ ventaEditada, setVentaEditada }) {
         }
       } catch (error) {
         console.error("Error al eliminar las ventas:", error);
+      }
+    }
+  
+    if (list.length > 0) {
+      // Agregar nuevas ventas
+      try {
+        // Usamos `for...of` para esperar cada promesa de la adición
+        for (const item of list) {
+          const venta = {
+            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${new Date()}`,
+            tipo: "Mayorista",
+            id_venta: uuidv4(),
+            vendedor: localStorage.getItem("name"),
+            ...item,
+          };
+          
+          // Esperamos la adición de la venta
+          await addDoc(collection(db, "ventas"), venta);
+          console.log("Venta guardada:", venta);
+        }
+      } catch (error) {
+        console.error("Error al guardar la venta:", error);
       }
     }
   
