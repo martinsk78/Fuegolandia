@@ -3,11 +3,11 @@ import cohetes from "../preciosMinorista.json";
 import { db } from "../firebaseConfig";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
-import dragon from '../imgs/dragonGif.gif'
+import dragon from "../imgs/dragonGif.gif";
 import { useNavigate } from "react-router-dom";
-function MinoristaMenu({ventaEditada, setVentaEditada}) {
-  const navigate = useNavigate()
-  
+function MinoristaMenu({ ventaEditada, setVentaEditada }) {
+  const navigate = useNavigate();
+
   const [search, setSearch] = useState("");
   const [cantidad, setCantidad] = useState(null);
   const [list, setList] = useState([]);
@@ -37,15 +37,14 @@ function MinoristaMenu({ventaEditada, setVentaEditada}) {
     window.addEventListener("keypress", handleKeyPress);
   }, []);
 
-  useEffect(()=>{
-    if(ventaEditada){
-      setList(ventaEditada)
+  useEffect(() => {
+    if (ventaEditada) {
+      setList(ventaEditada);
     }
-    return ()=>{
-      setVentaEditada([])
-    }
-  },[])
-
+    return () => {
+      setVentaEditada([]);
+    };
+  }, []);
 
   useEffect(() => {
     if (inputCoheteRef.current && deletedCohete === false) {
@@ -150,22 +149,8 @@ function MinoristaMenu({ventaEditada, setVentaEditada}) {
   };
 
   const handleVenta = async () => {
-    // if (list.length > 0) {
-    //   if (ventaEditada.length > 0) {
-    //     list.forEach((item,index) => {
-    //        let newVenta = {
-    //         fecha_hora: ventaEditada[0].fecha_hora,
-    //         tipo: "Minorista",
-    //         id_venta: uuidv4(),
-    //         vendedor: localStorage.getItem("name"),
-    //         ...item,
-    //       };
-          
-          
-    //     });
-  
-        
-    //   } else {
+    if (list.length > 0) {
+     
         list.forEach(async (item) => {
           const venta = {
             fecha_hora: `${new Date()}`,
@@ -181,7 +166,8 @@ function MinoristaMenu({ventaEditada, setVentaEditada}) {
             console.error("Error al guardar la venta:", error);
           }
         });
-        setList([])
+        setList([]);
+      }
     }
   
 
@@ -205,7 +191,11 @@ function MinoristaMenu({ventaEditada, setVentaEditada}) {
   };
   return (
     <div className="flex items-center justify-center relative w-[100vw] h-full sm:h-[100vh] text-white">
-      <img alt='fuegolandia dragon' src={dragon} className='absolute top-5 right-0 sm:right-16 w-[15rem] '/>
+      <img
+        alt="fuegolandia dragon"
+        src={dragon}
+        className="absolute top-5 right-0 sm:right-16 w-[15rem] "
+      />
 
       <div className="bg-black flex sm:p-10 w-full h-full sm:w-[90%] sm:h-[90%] bg-opacity-80">
         <div className="w-full h-full sm:flex-row flex-col flex gap-10">
@@ -213,7 +203,9 @@ function MinoristaMenu({ventaEditada, setVentaEditada}) {
             <h1 className="text-4xl m-5">FUEGOLANDIA</h1>
 
             <div className="flex sm:flex-row flex-col justify-between w-full">
-              <h2 className="text-3xl font-bold p-3 m-2 underline">Menu Minorista</h2>
+              <h2 className="text-3xl font-bold p-3 m-2 underline">
+                Menu Minorista
+              </h2>
               <div className="flex">
                 <button
                   onClick={() => navigate("/historial")}
@@ -261,9 +253,7 @@ function MinoristaMenu({ventaEditada, setVentaEditada}) {
                     {matches.map((match, index) => (
                       <div
                         className={`flex items-center hover:bg-slate-500  ${
-                          index === selectedIndex
-                            ? "bg-blue-200"
-                            : ""
+                          index === selectedIndex ? "bg-blue-200" : ""
                         }`}
                       >
                         <h3
@@ -275,9 +265,7 @@ function MinoristaMenu({ventaEditada, setVentaEditada}) {
                         </h3>
                         <h3
                           className={`text-xl p-2 text-black ${
-                            index === selectedIndex
-                              ? "text-blue-600"
-                              : ""
+                            index === selectedIndex ? "text-blue-600" : ""
                           } `}
                         >
                           ${match.price}

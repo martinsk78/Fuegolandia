@@ -61,7 +61,7 @@ function HistorialVentas({setVentaEditada}) {
   const handleDeleteVenta = async (venta) => {
     try {
       // Obtener el id del primer item de la venta (asumimos que todos los items de la venta tienen el mismo id)
-      const ventaId = venta[0].id;
+      const ventaId = venta[0].id;  
 
       // Eliminar el documento de la colección 'ventas'
       await deleteDoc(doc(db, 'ventas', ventaId));
@@ -182,7 +182,7 @@ function HistorialVentas({setVentaEditada}) {
                       </tr>
                       {venta.map((item, index) => {
                         return (
-                          <tr key={item.fecha_hora}>
+                          <tr key={item.id}>
                             <td className="border border-black py-2 font-semibold">
                               {index === 0
                                 ? new Date(item.fecha_hora).toLocaleString()
