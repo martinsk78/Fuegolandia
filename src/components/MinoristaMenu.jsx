@@ -1,11 +1,11 @@
 import { React, useEffect, useState, useRef } from "react";
 import cohetes from "../preciosMinorista.json";
 import { db } from "../firebaseConfig";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import dragon from '../imgs/dragonGif.gif'
 import { useNavigate } from "react-router-dom";
-function MinoristaMenu() {
+function MinoristaMenu({ventaEditada, setVentaEditada}) {
   const navigate = useNavigate()
   
   const [search, setSearch] = useState("");
@@ -36,6 +36,16 @@ function MinoristaMenu() {
     };
     window.addEventListener("keypress", handleKeyPress);
   }, []);
+
+  useEffect(()=>{
+    if(ventaEditada){
+      setList(ventaEditada)
+    }
+    return ()=>{
+      setVentaEditada([])
+    }
+  },[])
+
 
   useEffect(() => {
     if (inputCoheteRef.current && deletedCohete === false) {
@@ -140,28 +150,40 @@ function MinoristaMenu() {
   };
 
   const handleVenta = async () => {
-    if (list.length > 0) {
-      list.forEach(async (item) => {
-        const venta = {
-          fecha_hora: `${new Date()}`,
-          tipo: "Minorista",
-          id_venta: uuidv4(),
-          vendedor : localStorage.getItem('name'),
-          ...item,
-        };
-        try {
-          // Corrected the addDoc call
-          await addDoc(collection(db, "ventas"), venta);
-          console.log(venta   )
-          // Clear the list after the sale is processed
-        } catch (error) {
-          console.error("Error al guardar la venta:", error);
-        }
-      });
+    // if (list.length > 0) {
+    //   if (ventaEditada.length > 0) {
+    //     list.forEach((item,index) => {
+    //        let newVenta = {
+    //         fecha_hora: ventaEditada[0].fecha_hora,
+    //         tipo: "Minorista",
+    //         id_venta: uuidv4(),
+    //         vendedor: localStorage.getItem("name"),
+    //         ...item,
+    //       };
+          
+          
+    //     });
   
-      setList([]);
+        
+    //   } else {
+        list.forEach(async (item) => {
+          const venta = {
+            fecha_hora: `${new Date()}`,
+            tipo: "Minorista",
+            id_venta: uuidv4(),
+            vendedor: localStorage.getItem("name"),
+            ...item,
+          };
+          try {
+            await addDoc(collection(db, "ventas"), venta);
+            console.log("Venta guardada:", venta);
+          } catch (error) {
+            console.error("Error al guardar la venta:", error);
+          }
+        });
+        setList([])
     }
-  };
+  
 
   const handleNewCohete = (e) => {
     e.preventDefault();

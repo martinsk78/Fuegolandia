@@ -3,37 +3,42 @@ import React, { useEffect, useState } from "react";
 import { db } from "../firebaseConfig";
 import dragon from '../imgs/dragonGif.gif'
 import { useNavigate } from "react-router-dom";
-function HistorialVentas() {
+function HistorialVentas({setVentaEditada}) {
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState([]);
   useEffect(() => {
+    setVentaEditada([])
     const fetchData = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "ventas"));
-        const fetchedData = querySnapshot.docs.map(doc => ({ 
-          id: doc.id,  // Agregar el id del documento
-          ...doc.data() 
-        }));        const groupedItems = fetchedData.reduce((acc, item) => {
+        const fetchedData = querySnapshot.docs.map((doc) => ({
+          id: doc.id, // Agregar el id del documento
+          ...doc.data(),
+        }));
+  
+        // Aquí mostramos los IDs de los documentos
+  
+        const groupedItems = fetchedData.reduce((acc, item) => {
           const fechaHora = item.fecha_hora; // Usamos la fecha y hora completa como clave para agrupar
-
+  
           if (!acc[fechaHora]) {
             acc[fechaHora] = [];
           }
-
+  
           acc[fechaHora].push(item);
           return acc;
         }, {});
+  
         const groupedItemsSorted = Object.keys(groupedItems)
           .sort((a, b) => new Date(a) - new Date(b)) // Comparar como fechas
           .reduce((sortedObj, key) => {
             sortedObj[key] = groupedItems[key];
             return sortedObj;
           }, {});
-
+  
         setHistory(Object.values(groupedItemsSorted));
-        console.log(history);
       } catch (error) {
         console.error("Error fetching data: ", error);
       } finally {
@@ -42,6 +47,7 @@ function HistorialVentas() {
     };
     fetchData();
   }, []);
+  
   // Recuperar el historial del estado local o del localStorage
   // Estado para manejar el día seleccionado
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -88,6 +94,11 @@ function HistorialVentas() {
       return newDate;
     });
   };
+
+  const handleEditarVenta = (venta)=>{
+        setVentaEditada(venta);
+        navigate(`/${venta[0].tipo.toLowerCase()}`)
+  }
 
   const filteredHistory = history.filter(filterByDate);
 
@@ -151,10 +162,16 @@ function HistorialVentas() {
                           {venta[0].vendedor}
                         </td>
                         <td
-                          colSpan={3}
+                          colSpan={2}
                           className="border-2 font-bold cursor-pointer px-4 py-2 border-black bg-yellow-400 text-black"
                         >
                           Venta {index + 1}
+                        </td>
+                        <td
+                          onClick={() => handleEditarVenta(venta)}
+                          className="cursor-pointer bg-green-500 text-black hover:bg-green-800 border-2 border-black"
+                        >
+                          Editar
                         </td>
                         <td
                           onClick={() => handleDeleteVenta(venta)}
