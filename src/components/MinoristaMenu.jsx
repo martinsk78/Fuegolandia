@@ -175,13 +175,14 @@ function MinoristaMenu({ ventaEditada, setVentaEditada }) {
         console.error("Error al eliminar las ventas:", error);
       }
     }
+    let newDate = new Date();
     if (list.length > 0) {
       // Agregar nuevas ventas
       try {
         // Usamos `for...of` para esperar cada promesa de la adición
         for (const item of list) {
           const venta = {
-            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${new Date()}`,
+            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${newDate}`,
             tipo: "Minorista",
             id_venta: uuidv4(),
             vendedor: localStorage.getItem("name"),
