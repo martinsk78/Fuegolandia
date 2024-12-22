@@ -344,7 +344,7 @@ function MayoristaMenu({ ventaEditada, setVentaEditada }) {
                 onClick={handleVenta}
                 className="text-3xl bg-green-600 hover:bg-green-700 m-2 px-5 py-3 rounded text-white"
               >
-                Agregar Venta
+              {ventaEditada.length === 0 ? 'Agregar Venta' : 'Confimar Edicion'}
               </button>
             </form>
             <div className="flex items-center justify-center"></div>
