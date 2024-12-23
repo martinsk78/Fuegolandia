@@ -8,8 +8,8 @@
     "price": 1600
   },
   {
-    "name": "Estallo",
-    "price": 6300
+    "name": "Estallo x32",
+    "price": 6000
   },
   {
     "name": "Bengalita",
@@ -48,12 +48,20 @@
     "price": 15900
   },
   {
-    "name": "Estrellita",
+    "name": "Estrellita x500",
     "price": 28500
   },
   {
-    "name": "Cañita Silbadora",
+    "name": "Estrellita x1000",
+    "price": 57000
+  },
+  {
+    "name": "Cañita Silbadora x6",
     "price": 8400
+  },
+  {
+    "name": "Cañita Silbadora x12",
+    "price": 16800
   },
   {
     "name": "Abejita",
@@ -101,15 +109,19 @@
   },
   {
     "name": "Base Misil x16",
-    "price": 1900
+    "price": 2500
   },
   {
     "name": "Base Misil x25",
-    "price": 2000
+    "price": 2700
   },
   {
     "name": "Base Misil x50",
     "price": 5000
+  },
+  {
+    "name": "Cañon th1",
+    "price": 3500
   },
   {
     "name": "Base Misil x100",

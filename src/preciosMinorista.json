@@ -132,8 +132,12 @@
     "price": 800
   },
   {
-    "name": "Estrellita Display",
+    "name": "Estrellita Display x500",
     "price": 37900
+  },
+  {
+    "name": "Estrellita Display x1000",
+    "price": 75800
   },
   {
     "name": "Estallo x1",
@@ -172,8 +176,12 @@
     "price": 1600
   },
   {
-    "name": "Cañita Silbadora Display",
+    "name": "Cañita Silbadora Display x6 ",
     "price": 11000
+  },
+  {
+    "name": "Cañita Silbadora Display x12 ",
+    "price": 22000
   },
   {
     "name": "Globo",
@@ -184,7 +192,7 @@
     "price": 5000
   },
   {
-    "name": "Super T1",
+    "name": "Cañon th1",
     "price": 5000
   },
   {
@@ -292,7 +300,7 @@
     "price":5000
   },
   {
-    "name":"Combo Kid",
-    "price":5000
+    "name":"Combo Adulto",
+    "price":15000
   }
 ]
