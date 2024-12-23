@@ -140,8 +140,12 @@
     "price": 250
   },
   {
-    "name": "Estallo Caja",
+    "name": "Estallo Caja x40",
     "price": 8500
+  },
+  {
+    "name": "Estallo Caja x32",
+    "price": 8000
   },
   {
     "name": "Huevo de Dragón x1",
@@ -152,15 +156,15 @@
     "price": 5500
   },
   {
-    "name": "Matabrujas x1",
+    "name": "Rompe Rancho x1",
     "price": 1000
   },
   {
-    "name": "Matabrujas Display",
+    "name": "Rompe Rancho Display",
     "price": 5000
   },
   {
-    "name": "Matabrujas Caja",
+    "name": "Rompe Rancho Caja",
     "price": 31500
   },
   {
