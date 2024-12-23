@@ -151,21 +151,52 @@ function MinoristaMenu({ ventaEditada, setVentaEditada }) {
   };
 
   const handleVenta = async () => {
-    // Eliminar ventas existentes en `ventaEditada` 
+    if (list.length > 0) {
+      try {
+        // Generar una fecha_hora única para esta venta
+        const fechaHora = ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${new Date()}`;
+        
+        // Crear un lote de operaciones para optimizar las escrituras
+        const batch = writeBatch(db);
+  
+        // Usamos un loop para agregar cada ítem con la misma fecha_hora al lote
+        for (const item of list) {
+          const venta = {
+            fecha_hora: fechaHora, // Fecha compartida para todos los ítems de esta venta
+            tipo: "Minorista",
+            id_venta: uuidv4(),
+            vendedor: localStorage.getItem("name"),
+            ...item,
+          };
+  
+          // Agregar la venta al lote
+          const ventaRef = doc(collection(db, "ventas"));
+          batch.set(ventaRef, venta);
+          console.log("Venta preparada para guardar:", venta);
+        }
+  
+        // Ejecutar el lote
+        await batch.commit();
+        console.log("Ventas guardadas con éxito");
+      } catch (error) {
+        console.error("Error al guardar la venta:", error);
+      }
+    }
+  
+    // Eliminar ventas existentes en `ventaEditada`
     if (ventaEditada.length > 0) {
       try {
-        // Usamos `for...of` para esperar cada promesa de la eliminación
         for (const venta of ventaEditada) {
           const fechaHora = venta.fecha_hora;
-          
-          // Eliminar el documento de la colección 'ventas' utilizando fecha_hora
+  
+          // Buscar y eliminar documentos con la misma fecha_hora
           const ventaRef = query(
-            collection(db, 'ventas'),
+            collection(db, "ventas"),
             where('fecha_hora', '==', fechaHora)
           );
           const querySnapshot = await getDocs(ventaRef);
   
-          // Eliminar el documento encontrado
+          // Eliminar los documentos encontrados
           querySnapshot.forEach(async (doc) => {
             await deleteDoc(doc.ref);
             console.log("Venta eliminada:", doc.id);
@@ -175,30 +206,6 @@ function MinoristaMenu({ ventaEditada, setVentaEditada }) {
         console.error("Error al eliminar las ventas:", error);
       }
     }
-    let newDate = new Date();
-    if (list.length > 0) {
-      // Agregar nuevas ventas
-      try {
-        // Usamos `for...of` para esperar cada promesa de la adición
-        for (const item of list) {
-          const venta = {
-            fecha_hora: ventaEditada.length > 0 ? ventaEditada[0].fecha_hora : `${newDate}`,
-            tipo: "Minorista",
-            id_venta: uuidv4(),
-            vendedor: localStorage.getItem("name"),
-            ...item,
-          };
-          
-          // Esperamos la adición de la venta
-          await addDoc(collection(db, "ventas"), venta);
-          console.log("Venta guardada:", venta);
-        }
-      } catch (error) {
-        console.error("Error al guardar la venta:", error);
-      }
-    }
-  
-    
   
     // Limpiar el estado de `list` después de todas las operaciones
     setList([]);
