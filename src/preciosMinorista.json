@@ -124,8 +124,12 @@
     "price": 1800
   },
   {
-    "name": "Estrellita x1",
+    "name": "Estrellita x5",
     "price": 400
+  },
+  {
+    "name": "Estrellita x10",
+    "price": 800
   },
   {
     "name": "Estrellita Display",

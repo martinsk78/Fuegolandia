@@ -151,6 +151,30 @@ function MayoristaMenu({ ventaEditada, setVentaEditada }) {
   };
 
   const handleVenta = async () => {
+    
+    // Eliminar ventas existentes en `ventaEditada`
+    if (ventaEditada.length > 0) {
+      try {
+        for (const venta of ventaEditada) {
+          const fechaHora = venta.fecha_hora;
+  
+          // Buscar y eliminar documentos con la misma fecha_hora
+          const ventaRef = query(
+            collection(db, "ventas"),
+            where('fecha_hora', '==', fechaHora)
+          );
+          const querySnapshot = await getDocs(ventaRef);
+  
+          // Eliminar los documentos encontrados
+          querySnapshot.forEach(async (doc) => {
+            await deleteDoc(doc.ref);
+            console.log("Venta eliminada:", doc.id);
+          });
+        }
+      } catch (error) {
+        console.error("Error al eliminar las ventas:", error);
+      }
+    }
     if (list.length > 0) {
       try {
         // Generar una fecha_hora única para esta venta
@@ -180,30 +204,6 @@ function MayoristaMenu({ ventaEditada, setVentaEditada }) {
         console.log("Ventas guardadas con éxito");
       } catch (error) {
         console.error("Error al guardar la venta:", error);
-      }
-    }
-  
-    // Eliminar ventas existentes en `ventaEditada`
-    if (ventaEditada.length > 0) {
-      try {
-        for (const venta of ventaEditada) {
-          const fechaHora = venta.fecha_hora;
-  
-          // Buscar y eliminar documentos con la misma fecha_hora
-          const ventaRef = query(
-            collection(db, "ventas"),
-            where('fecha_hora', '==', fechaHora)
-          );
-          const querySnapshot = await getDocs(ventaRef);
-  
-          // Eliminar los documentos encontrados
-          querySnapshot.forEach(async (doc) => {
-            await deleteDoc(doc.ref);
-            console.log("Venta eliminada:", doc.id);
-          });
-        }
-      } catch (error) {
-        console.error("Error al eliminar las ventas:", error);
       }
     }
   
