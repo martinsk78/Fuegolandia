@@ -1,7 +1,7 @@
 [
   {
     "name": "Fosforito",
-    "price": 2860
+    "price": 3000
   },
   {
     "name": "Florerito",
@@ -122,6 +122,14 @@
   {
     "name": "Cañon th1",
     "price": 3500
+  },
+  {
+    "name": "Cañon t2",
+    "price": 9000
+  },
+  {
+    "name": "Cañon segunda dimension ",
+    "price": 7800
   },
   {
     "name": "Base Misil x100",
