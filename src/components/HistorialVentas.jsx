@@ -1,14 +1,18 @@
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { db } from "../firebaseConfig";
 import dragon from '../imgs/dragonGif.gif'
 import { useNavigate } from "react-router-dom";
 function HistorialVentas({setVentaEditada}) {
   const navigate = useNavigate()
+  const listRef = useRef();
 
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   useEffect(() => {
+    
     setVentaEditada([])
     const fetchData = async () => {
       try {
@@ -46,11 +50,31 @@ function HistorialVentas({setVentaEditada}) {
       }
     };
     fetchData();
+    
   }, []);
   
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTo({
+        top: listRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+    console.log(filteredHistory.reduce((acc, curr)=>{
+      let martinVenta = curr.reduce((accc, currr)=>{
+        if(currr.vendedor === 'Martin'){
+          return accc + currr.precioTotal
+        }else{
+          return accc + 0;
+        }
+      },0)
+      return acc + martinVenta
+    },0))
+  }, [selectedDate]);
+  
+
   // Recuperar el historial del estado local o del localStorage
   // Estado para manejar el día seleccionado
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const clearHistory = () => {
     // Limpiar el historial en el estado y en el localStorage
@@ -111,6 +135,8 @@ function HistorialVentas({setVentaEditada}) {
         navigate(`/${venta[0].tipo.toLowerCase()}`)
   }
 
+  
+
   const filteredHistory = history.filter(filterByDate);
 
   return (
@@ -139,7 +165,7 @@ function HistorialVentas({setVentaEditada}) {
             </button>
           </div>
         </div>
-        <div className="overflow-y-auto bg-white text-black w-full  sm:w-[90%] h-[40rem]">
+        <div ref={listRef} className="overflow-y-auto bg-white text-black w-full  sm:w-[90%] h-[40rem]">
           {filteredHistory.length > 0 ? (
             <div className="flex flex-col">
               <table className="table-auto sm:text-xl text-sm w-full text-center border">
