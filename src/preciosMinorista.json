@@ -73,7 +73,7 @@
   },
   {
     "name": "Candela 30 tiros Display",
-    "price": 19000
+    "price": 15000
   },
   {
     "name": "Candela 50 tiros x1",
@@ -148,6 +148,10 @@
     "price": 9000
   },
   {
+    "name": "Estallo Caja x40",
+    "price": 10000
+  },
+  {
     "name": "Huevo de Dragón x1",
     "price": 600
   },
@@ -169,7 +173,7 @@
   },
   {
     "name": "Cañita Silbadora Docena",
-    "price": 2200
+    "price": 2000
   },
   {
     "name": "Cañita Silbadora Display x6 ",
