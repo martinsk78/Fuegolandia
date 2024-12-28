@@ -1,7 +1,7 @@
 [
   {
     "name": "Abejita",
-    "price": 2500
+    "price": 3000
   },
   {
     "name": "Bengalita x1",
@@ -9,67 +9,67 @@
   },
   {
     "name": "Bengalita Display",
-    "price": 8500
+    "price": 9500
   },
   {
     "name": "Batería x1",
-    "price": 400
-  },
-  {
-    "name": "Batería Display",
-    "price": 8000
-  },
-  {
-    "name": "Base Misil x16 x1",
-    "price": 2500
-  },
-  {
-    "name": "Base Misil x16 Display",
-    "price": 10000
-  },
-  {
-    "name": "Base Misil x25 x1",
-    "price": 2700
-  },
-  {
-    "name": "Base Misil x25 Display",
-    "price": 10800
-  },
-  {
-    "name": "Base Misil x50",
-    "price": 6500
-  },
-  {
-    "name": "Base Misil x100",
-    "price": 12500
-  },
-  {
-    "name": "Candela 5 tiros x12 unidades x1",
     "price": 500
   },
   {
-    "name": "Candela 5 tiros x12 unidades Display",
-    "price": 6000
+    "name": "Batería Display",
+    "price": 9000
   },
   {
-    "name": "Candela 10 tiros x1",
-    "price": 600
+    "name": "Base Misil x16 x1",
+    "price": 3000
   },
   {
-    "name": "Candela 10 tiros Display",
+    "name": "Base Misil x16 Display",
+    "price": 12000
+  },
+  {
+    "name": "Base Misil x25 x1",
     "price": 3500
   },
   {
+    "name": "Base Misil x25 Display",
+    "price": 14000
+  },
+  {
+    "name": "Base Misil x50",
+    "price": 7700
+  },
+  {
+    "name": "Base Misil x100",
+    "price": 14500
+  },
+  {
+    "name": "Candela 5 tiros x12 unidades x1",
+    "price": 600
+  },
+  {
+    "name": "Candela 5 tiros x12 unidades Display",
+    "price": 7200
+  },
+  {
+    "name": "Candela 10 tiros x1",
+    "price": 700
+  },
+  {
+    "name": "Candela 10 tiros Display",
+    "price": 4200
+  },
+  {
     "name": "Candela 20 tiros x1",
-    "price": 900
+    "price": 1000
   },
   {
     "name": "Candela 20 tiros Display",
-    "price": 5000
+    "price": 6000
   },
   {
     "name": "Candela 30 tiros x1",
-    "price": 1100
+    "price": 1200
   },
   {
     "name": "Candela 30 tiros Display",
@@ -77,27 +77,27 @@
   },
   {
     "name": "Candela 50 tiros x1",
-    "price": 2000
+    "price": 2200
   },
   {
     "name": "Candela 50 tiros Display",
-    "price": 11500
+    "price": 13500
   },
   {
     "name": "Candela 80 tiros x1",
-    "price": 3500
+    "price": 4100
   },
   {
     "name": "Candela 80 tiros Display",
-    "price": 21000
+    "price": 24400
   },
   {
     "name": "Caña Bomba x1",
-    "price": 2500
+    "price": 3000
   },
   {
     "name": "Caña Bomba Display",
-    "price": 15000
+    "price": 18000
   },
   {
     "name": "Caña con Paracaídas x1",
@@ -105,7 +105,7 @@
   },
   {
     "name": "Caña con Paracaídas Display",
-    "price": 5000
+    "price": 5500
   },
   {
     "name": "Fosforito x1",
@@ -113,7 +113,7 @@
   },
   {
     "name": "Fosforito Display",
-    "price": 3000
+    "price": 3500
   },
   {
     "name": "Florerito x1",
@@ -141,19 +141,19 @@
   },
   {
     "name": "Estallo x1",
-    "price": 250
+    "price": 300
    },
   {
     "name": "Estallo Caja x32",
-    "price": 8000
+    "price": 9000
   },
   {
     "name": "Huevo de Dragón x1",
-    "price": 500
+    "price": 600
   },
   {
     "name": "Huevo de Dragón Display",
-    "price": 5500
+    "price": 6400
   },
   {
     "name": "Tumba Rancho x1",
@@ -169,19 +169,19 @@
   },
   {
     "name": "Cañita Silbadora Docena",
-    "price": 1800
+    "price": 2200
   },
   {
     "name": "Cañita Silbadora Display x6 ",
-    "price": 11000
+    "price": 13000
   },
   {
     "name": "Cañita Silbadora Display x12 ",
-    "price": 22000
+    "price": 26000
   },
   {
     "name": "Globo",
-    "price": 3500
+    "price": 4000
   },
   {
     "name": "Volcán",
@@ -209,43 +209,47 @@
   },
   {
     "name": "Mega Efecto x1",
-    "price": 6500
+    "price": 7500
   },
   {
     "name": "Mega Efecto Display",
-    "price": 25000
+    "price": 30000
   },
   {
     "name": "Show 48 Perlas x1",
-    "price": 4000
+    "price": 4500
   },
   {
     "name": "Show 48 Perlas Display",
-    "price": 15000
+    "price": 18000
   },
   {
     "name": "Show 96 Perlas x1",
-    "price": 7000
+    "price": 9000
   },
   {
     "name": "Show 96 Perlas Display",
-    "price": 29000
+    "price": 36000
+  },
+  {
+    "name": "Morterito x1",
+    "price": 1600
   },
   {
     "name": "Morterito Display",
-    "price": 8000
+    "price": 9500
   },
   {
-    "name": "Mortero 2da Dimensión",
-    "price": 10000
+    "name": "Mortero segunda Dimensión",
+    "price": 12000
   },
   {
     "name": "Bomba Shell 1/12\"",
-    "price": 35000
+    "price": 32000
   },
   {
     "name": "Bomba Shell 2\"",
-    "price": 28000
+    "price": 34000
   },
   {
     "name": "Cleopatra",
