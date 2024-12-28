@@ -1,15 +1,15 @@
 [
   {
     "name": "Abejita",
-    "price": 3000
+    "price": 3500
   },
   {
     "name": "Bengalita x1",
-    "price": 1000
+    "price": 2000
   },
   {
     "name": "Bengalita Display",
-    "price": 9500
+    "price": 19500
   },
   {
     "name": "Batería x1",
@@ -29,7 +29,7 @@
   },
   {
     "name": "Base Misil x25 x1",
-    "price": 3500
+    "price": 4000
   },
   {
     "name": "Base Misil x25 Display",
@@ -37,7 +37,7 @@
   },
   {
     "name": "Base Misil x50",
-    "price": 7700
+    "price": 7500
   },
   {
     "name": "Base Misil x100",
@@ -45,35 +45,35 @@
   },
   {
     "name": "Candela 5 tiros x12 unidades x1",
-    "price": 600
-  },
-  {
-    "name": "Candela 5 tiros x12 unidades Display",
-    "price": 7200
-  },
-  {
-    "name": "Candela 10 tiros x1",
-    "price": 700
-  },
-  {
-    "name": "Candela 10 tiros Display",
-    "price": 4200
-  },
-  {
-    "name": "Candela 20 tiros x1",
     "price": 1000
   },
   {
-    "name": "Candela 20 tiros Display",
+    "name": "Candela 5 tiros x12 unidades Display",
+    "price": 10000
+  },
+  {
+    "name": "Candela 10 tiros x1",
+    "price": 1600
+  },
+  {
+    "name": "Candela 10 tiros Display",
     "price": 6000
   },
   {
+    "name": "Candela 20 tiros x1",
+    "price": 2000
+  },
+  {
+    "name": "Candela 20 tiros Display",
+    "price": 10000
+  },
+  {
     "name": "Candela 30 tiros x1",
-    "price": 1200
+    "price": 2500
   },
   {
     "name": "Candela 30 tiros Display",
-    "price": 6500
+    "price": 19000
   },
   {
     "name": "Candela 50 tiros x1",
@@ -233,11 +233,11 @@
   },
   {
     "name": "Morterito x1",
-    "price": 1600
+    "price": 2000
   },
   {
     "name": "Morterito Display",
-    "price": 9500
+    "price": 10000
   },
   {
     "name": "Mortero segunda Dimensión",
