@@ -40,6 +40,10 @@
     "price": 7500
   },
   {
+    "name": "Mini Tortita x49",
+    "price": 7500
+  },
+  {
     "name": "Base Misil x100",
     "price": 14500
   },
@@ -77,11 +81,11 @@
   },
   {
     "name": "Candela 50 tiros x1",
-    "price": 2200
+    "price": 3000
   },
   {
     "name": "Candela 50 tiros Display",
-    "price": 13500
+    "price": 18000
   },
   {
     "name": "Candela 80 tiros x1",
@@ -102,6 +106,10 @@
   {
     "name": "Caña con Paracaídas x1",
     "price": 1000
+  },
+  {
+    "name": "Coliseo",
+    "price": 20000
   },
   {
     "name": "Caña con Paracaídas Display",
@@ -177,11 +185,11 @@
   },
   {
     "name": "Cañita Silbadora Display x6 ",
-    "price": 13000
+    "price": 12000
   },
   {
     "name": "Cañita Silbadora Display x12 ",
-    "price": 26000
+    "price": 24000
   },
   {
     "name": "Globo",
@@ -197,11 +205,11 @@
   },
   {
     "name": "Super T2 x1",
-    "price": 7000
+    "price": 8000
   },
   {
     "name": "Super T2 Display",
-    "price": 12000
+    "price": 15000
   },
   {
     "name": "Mariposa x1",
@@ -292,8 +300,8 @@
     "price": 60000
   },
   {
-    "name": "Variedad",
-    "price": 25000
+    "name": "Show Variedad del 2000",
+    "price": 20000
   },
   {
     "name": "Lluvia de Fuego",
@@ -302,6 +310,10 @@
   {
     "name": "Gladiador",
     "price": 50000
+  },
+  {
+    "name": "Glaciar",
+    "price": 25000
   },
   {
     "name": "Espectaculo 19 Tiros",
