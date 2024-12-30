@@ -237,11 +237,15 @@
   },
   {
     "name": "Show 96 Perlas x1",
-    "price": 9000
+    "price": 10000
   },
   {
     "name": "Show 96 Perlas Display",
-    "price": 36000
+    "price": 40000
+  },
+  {
+    "name": "Promo globo x3",
+    "price": 10000
   },
   {
     "name": "Morterito x1",
@@ -321,10 +325,6 @@
   },
   {
     "name":"Combo Kid",
-    "price":5000
-  },
-  {
-    "name":"Combo Adulto",
-    "price":15000
+    "price":6000
   }
 ]
