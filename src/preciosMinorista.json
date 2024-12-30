@@ -48,6 +48,10 @@
     "price": 14500
   },
   {
+    "name": "Candela 5 tiros x6 unidades Display",
+    "price": 5000
+  },
+  {
     "name": "Candela 5 tiros x12 unidades x1",
     "price": 1000
   },
@@ -125,11 +129,11 @@
   },
   {
     "name": "Florerito x1",
-    "price": 200
+    "price": 400
   },
   {
     "name": "Florerito Display",
-    "price": 1800
+    "price": 3000
   },
   {
     "name": "Estrellita x5",
